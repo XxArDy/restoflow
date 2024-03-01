@@ -1,18 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http';
 import {
   BrowserAnimationsModule,
   provideAnimations,
 } from '@angular/platform-browser/animations';
-
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/feature/login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +22,7 @@ import { LoginComponent } from './login/feature/login.component';
       preventDuplicates: true,
     }),
   ],
-  providers: [provideAnimations()],
+  providers: [provideAnimations(), provideToastr()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
