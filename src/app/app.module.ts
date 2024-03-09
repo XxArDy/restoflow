@@ -9,6 +9,7 @@ import {
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AccountService } from './shared/data-access/account.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,7 @@ import { AppComponent } from './app.component';
       preventDuplicates: true,
     }),
   ],
-  providers: [provideAnimations(), provideToastr()],
+  providers: [provideAnimations(), provideToastr(), AccountService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
