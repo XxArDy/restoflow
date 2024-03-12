@@ -1,0 +1,55 @@
+<app-side-bar>
+  <div class="header">
+    <div class="header__search" (click)="focusInput()">
+      <i class="material-symbols-outlined unselectable">search</i>
+      <input
+        #searchInput
+        type="text"
+        placeholder="Search"
+        (input)="searchUsers($event)"
+      />
+    </div>
+    <div class="header__pagination">
+      <i class="material-symbols-outlined unselectable" (click)="changePage(-1)"
+        >chevron_left</i
+      >
+      <i class="material-symbols-outlined unselectable" (click)="changePage(1)"
+        >chevron_right</i
+      >
+    </div>
+  </div>
+  <table class="table">
+    <thead class="table__header">
+      <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Full name</th>
+        <th>Restaurant name</th>
+        <th>Bonus score</th>
+        <th>Deleted</th>
+        <th>Functions</th>
+      </tr>
+    </thead>
+    <tbody class="table__body">
+      <tr *ngFor="let user of showUserList">
+        <td>{{ user.email }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ getFullName(user) }}</td>
+        <td>{{ getRestaurantName(user) }}</td>
+        <td>{{ user.bonusScore || 0 }}</td>
+        <td [style.color]="user.deleted ? 'red' : 'green'">
+          {{ user.deleted ? "Deleted" : "Active" }}
+        </td>
+        <td class="table__functions">
+          <a class="material-symbols-outlined unselectable"> edit </a
+          ><a
+            class="material-symbols-outlined unselectable"
+            (click)="deactivateActivateUser(user)"
+          >
+            delete
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</app-side-bar>

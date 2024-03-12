@@ -6,10 +6,15 @@ import {
   BrowserAnimationsModule,
   provideAnimations,
 } from '@angular/platform-browser/animations';
+import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountService } from './shared/data-access/account.service';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +23,11 @@ import { AccountService } from './shared/data-access/account.service';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+      },
+    }),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,

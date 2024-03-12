@@ -29,9 +29,9 @@
   <p class="unselectable">
     Use the details provided you by your account administrator.
   </p>
-  <form class="form">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form__wrapper">
-      <input type="text" id="username" required />
+      <input type="text" id="username" formControlName="username" required />
       <label class="unselectable" for="username">Username</label>
       <i class="material-icons unselectable">person</i>
     </div>
@@ -39,6 +39,7 @@
       <input
         type="{{ showPassword ? 'text' : 'password' }}"
         id="password"
+        formControlName="password"
         required
       />
       <label class="unselectable" for="password">Password</label>
@@ -52,7 +53,7 @@
       </div>
     </div>
     <div class="btn-center">
-      <button>Sign in</button>
+      <button type="submit" [disabled]="loginForm.invalid">Sign in</button>
     </div>
   </form>
 </div>

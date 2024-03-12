@@ -8,6 +8,13 @@ const routes: Routes = [
       import('./login/feature/login.module').then((m) => m.LoginModule),
   },
   {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard-shell/dashboard-shell.module').then(
+        (m) => m.DashboardShellModule
+      ),
+  },
+  {
     path: 'not-found',
     loadChildren: () =>
       import('./not-found/feature/not-found.module').then(
