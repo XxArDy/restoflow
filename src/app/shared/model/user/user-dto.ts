@@ -1,4 +1,4 @@
-export interface UserDto {
+export interface IUserDto {
   authorities?: string[];
   bonusScore?: number;
   deleted?: boolean;

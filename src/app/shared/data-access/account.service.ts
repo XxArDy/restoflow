@@ -13,13 +13,14 @@ import {
 import { environment } from 'src/environments/environment';
 import { AuthResponseDto } from '../model/auth/auth-response-dto';
 import { AuthTokenDto } from '../model/auth/auth-token-dto';
+import { IUserDto } from '../model/user/user-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   private isLoggedIn = new BehaviorSubject<boolean>(false);
-  private userSubject = new BehaviorSubject<AuthResponseDto | null>(null);
+  private userSubject = new BehaviorSubject<IUserDto | undefined>(undefined);
   private _apiUrl: string = environment.apiWarlockUrl;
 
   constructor(
@@ -34,13 +35,13 @@ export class AccountService {
       .pipe(
         tap((response) => {
           this.isLoggedIn.next(true);
-          this.userSubject.next(response);
+          this.userSubject.next(response.userDTO);
           this.storeTokens(response.authTokenDTO);
         })
       );
   }
 
-  public getUser(): Observable<AuthResponseDto | null> {
+  public getUser(): Observable<IUserDto | null> {
     if (this.userSubject.value && !this.isTokenExpired()) {
       return of(this.userSubject.value);
     } else {
@@ -61,9 +62,9 @@ export class AccountService {
     }
   }
 
-  public getUserData(): Observable<AuthResponseDto> {
+  public getUserData(): Observable<IUserDto> {
     const accessToken = localStorage.getItem('accessToken');
-    return this.http.get<AuthResponseDto>(`${this._apiUrl}public/account`, {
+    return this.http.get<IUserDto>(`${this._apiUrl}public/account`, {
       headers: { auth: `${accessToken}` },
     });
   }
@@ -86,7 +87,7 @@ export class AccountService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     this.isLoggedIn.next(false);
-    this.userSubject.next(null);
+    this.userSubject.next(undefined);
     this.router.navigate(['/login']);
   }
 
