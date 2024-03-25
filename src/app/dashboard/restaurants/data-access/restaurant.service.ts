@@ -14,4 +14,29 @@ export class RestaurantService {
   getAllRestaurants(): Observable<IRestaurant[]> {
     return this.http.get<IRestaurant[]>(`${this.baseUrl}public/restaurant/all`);
   }
+
+  getRestaurantById(id: number): Observable<IRestaurant> {
+    return this.http.get<IRestaurant>(`${this.baseUrl}public/restaurant/${id}`);
+  }
+
+  deleteRestaurant(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}public/restaurant/${id}`);
+  }
+
+  updateRestaurant(
+    id: number,
+    restaurant: IRestaurant
+  ): Observable<IRestaurant> {
+    return this.http.put<IRestaurant>(
+      `${this.baseUrl}public/restaurant/${id}`,
+      restaurant
+    );
+  }
+
+  createRestaurant(restaurant: IRestaurant): Observable<IRestaurant> {
+    return this.http.post<IRestaurant>(
+      `${this.baseUrl}public/restaurant`,
+      restaurant
+    );
+  }
 }

@@ -1,0 +1,12 @@
+<div class="table">
+  <span class="table__name">{{ table.name }}</span>
+  <span class="table__seats">{{ table.numOfSeats }}</span>
+  <span class="table__status">{{ table.statusId }}</span>
+  <div class="table__hover">
+    <div class="table__hover-inner">
+      <a class="table__hover-edit" (click)="editTable()">Edit</a>
+      <a class="table__hover-orders" (click)="onOrderClick()">Orders</a>
+      <a class="table__hover-delete" (click)="deleteTable()">Delete</a>
+    </div>
+  </div>
+</div>

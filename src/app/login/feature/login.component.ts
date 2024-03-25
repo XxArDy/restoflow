@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { catchError } from 'rxjs';
 import { AccountService } from 'src/app/shared/data-access/account.service';
 
 @Component({
@@ -36,6 +37,12 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.accountService
       .login(this.loginForm.value.username, this.loginForm.value.password)
+      .pipe(
+        catchError((error) => {
+          this.toastr.error('Invalid credentials', 'Error');
+          throw error;
+        })
+      )
       .subscribe((res) => {
         this.toastr.success('Sign in success', 'Success');
         this.router.navigate(['dashboard', 'orders']);

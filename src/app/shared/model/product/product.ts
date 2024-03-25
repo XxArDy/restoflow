@@ -9,4 +9,5 @@ export interface IProduct {
   restaurantId: number;
   ingredients: string[];
   cookingTime: number;
+  bonusPoints: number;
 }

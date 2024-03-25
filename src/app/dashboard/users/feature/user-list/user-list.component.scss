@@ -1,6 +1,17 @@
 @import "../../../../../assets/styles/media",
   "../../../../../assets/styles/mixins";
 
+.create-link {
+  @include flex-center;
+  width: 250px;
+  font-size: 18px;
+  height: var(--button-height);
+  color: var(--color-text-dark);
+  background-color: var(--color-primary);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -13,7 +24,7 @@
 
   &__search {
     width: 250px;
-    height: 50px;
+    height: var(--input-height);
     display: flex;
     align-items: center;
     border: var(--border);
@@ -41,17 +52,26 @@
     border: var(--border);
     border-radius: var(--border-radius);
     @include flex-center;
-    height: 50px;
+    height: var(--button-height);
 
     i {
       @include flex-center;
       width: 65px;
-      height: 50px;
+      height: var(--button-height);
       font-size: 30px;
       cursor: pointer;
 
+      @include hover {
+        background-color: var(--color-light);
+      }
+
       &:first-child {
         border-right: var(--border);
+        border-radius: var(--border-radius) 0 0 var(--border-radius);
+      }
+
+      &:last-child {
+        border-radius: 0 var(--border-radius) var(--border-radius) 0;
       }
     }
   }
@@ -73,6 +93,17 @@
       background-color: var(--color-primary);
       text-align: left;
       font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+
+      th {
+        height: 64px;
+        vertical-align: middle;
+      }
+    }
+
+    span {
+      vertical-align: middle;
     }
   }
 
@@ -91,19 +122,19 @@
   }
 
   &__functions {
-    height: 100%;
-    width: 100%;
     padding: 0 !important;
     width: auto;
+
     a {
       border: var(--border);
       border-radius: var(--border-radius);
       font-size: 24px;
       padding: 10px;
-      margin: 0 10px;
       cursor: pointer;
 
       &:first-child {
+        margin: 0 10px;
+
         @include hover {
           color: blue;
         }
@@ -116,6 +147,7 @@
       }
     }
   }
+
   th,
   td {
     padding: 20px 15px;

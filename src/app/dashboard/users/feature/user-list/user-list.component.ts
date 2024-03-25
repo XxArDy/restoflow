@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RestaurantService } from 'src/app/dashboard/restaurants/data-access/restaurant.service';
+import { AccountService } from 'src/app/shared/data-access/account.service';
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
 import { IUserDto } from 'src/app/shared/model/user/user-dto';
 import { UserService } from '../../data-access/user.service';
@@ -16,24 +17,37 @@ export class UserListComponent implements OnInit {
   showUserList: IUserDto[] = [];
   currentPage: number = 0;
   pageElement: number = 10;
+  sortField: string | null = null;
+  sortDirection: 'asc' | 'desc' | '' = '';
 
   private _searchQuery: string = '';
   private _searchUserList: IUserDto[] = [];
   private _allRestaurantList: IRestaurant[] = [];
+  private _currentUser!: IUserDto;
 
   constructor(
     private userService: UserService,
+    private accountService: AccountService,
     private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.getAllRestaurants();
-    this.getAllUsers('');
   }
 
-  getAllUsers(query: string): void {
+  getAllUsers(): void {
     this.userService.getAllUsers().subscribe((res) => {
-      this.allUserList = res;
+      if (this._currentUser.authorities?.includes('SUPER_ADMIN'))
+        this.allUserList = res;
+      else
+        this.allUserList = res.filter(
+          (user) =>
+            user.restaurantId === this._currentUser.restaurantId ||
+            (user.restaurantId === null &&
+              !user.authorities?.includes('SUPER_ADMIN'))
+        );
+      this.currentPage = 0;
       this.changePage(1);
     });
   }
@@ -41,6 +55,13 @@ export class UserListComponent implements OnInit {
   getAllRestaurants(): void {
     this.restaurantService.getAllRestaurants().subscribe((res) => {
       this._allRestaurantList = res;
+    });
+  }
+
+  getCurrentUser(): void {
+    this.accountService.getUserData().subscribe((res) => {
+      this._currentUser = res;
+      this.getAllUsers();
     });
   }
 
@@ -60,7 +81,7 @@ export class UserListComponent implements OnInit {
 
   deactivateActivateUser(user: IUserDto): void {
     this.userService.deactivateActivateUser(user.id!).subscribe((res) => {
-      this.getAllUsers('');
+      this.getAllUsers();
     });
   }
 
@@ -91,10 +112,42 @@ export class UserListComponent implements OnInit {
           .includes(this._searchQuery.toLowerCase()) ||
         this.getFullName(user)
           .toLowerCase()
+          .includes(this._searchQuery.toLowerCase()) ||
+        this.getRestaurantName(user)
+          ?.toLowerCase()
           .includes(this._searchQuery.toLowerCase())
       );
     });
+    this.sortField = null;
     this.currentPage = 0;
     this.changePage(1);
+  }
+
+  sortData(sortField: keyof IUserDto | 'fullName' | 'restaurantName'): void {
+    if (this.sortField === sortField) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortField = sortField;
+      this.sortDirection = 'asc';
+    }
+    this.showUserList.sort((a, b) => {
+      let valueA: string | number | boolean | undefined | string[];
+      let valueB: string | number | boolean | undefined | string[];
+
+      if (sortField === 'fullName') {
+        valueA = this.getFullName(a).toLowerCase() || '';
+        valueB = this.getFullName(b).toLowerCase() || '';
+      } else if (sortField === 'restaurantName') {
+        valueA = this.getRestaurantName(a)?.toLowerCase() || '';
+        valueB = this.getRestaurantName(b)?.toLowerCase() || '';
+      } else {
+        valueA = a[sortField] || '';
+        valueB = b[sortField] || '';
+      }
+
+      if (valueA < valueB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valueA > valueB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
   }
 }

@@ -7,6 +7,5 @@ import { LoginComponent } from './login.component';
 @NgModule({
   declarations: [LoginComponent],
   imports: [CommonModule, LoginRoutingModule, ReactiveFormsModule],
-  // providers: [JwtHelperService],
 })
 export class LoginModule {}

@@ -1,5 +1,7 @@
 <app-side-bar>
   <div class="header">
+    <a [routerLink]="['create']" class="create-link">Create user</a>
+
     <div class="header__search" (click)="focusInput()">
       <i class="material-symbols-outlined unselectable">search</i>
       <input
@@ -21,15 +23,82 @@
   <table class="table">
     <thead class="table__header">
       <tr>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Full name</th>
-        <th>Restaurant name</th>
-        <th>Bonus score</th>
-        <th>Deleted</th>
+        <th (click)="sortData('email')">
+          Email
+          <span
+            *ngIf="sortField === 'email'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
+        <th (click)="sortData('username')">
+          Username
+          <span
+            *ngIf="sortField === 'username'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
+        <th (click)="sortData('fullName')">
+          Full name
+          <span
+            *ngIf="sortField === 'fullName'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
+        <th (click)="sortData('restaurantName')">
+          Restaurant name
+          <span
+            *ngIf="sortField === 'restaurantName'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
+        <th (click)="sortData('bonusScore')">
+          Bonus score
+          <span
+            *ngIf="sortField === 'bonusScore'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
+        <th (click)="sortData('deleted')">
+          Deleted
+          <span
+            *ngIf="sortField === 'deleted'"
+            class="material-symbols-outlined"
+            >{{
+              sortDirection === "asc"
+                ? "keyboard_arrow_up"
+                : "keyboard_arrow_down"
+            }}</span
+          >
+        </th>
         <th>Functions</th>
       </tr>
     </thead>
+
     <tbody class="table__body">
       <tr *ngFor="let user of showUserList">
         <td>{{ user.email }}</td>
@@ -41,7 +110,12 @@
           {{ user.deleted ? "Deleted" : "Active" }}
         </td>
         <td class="table__functions">
-          <a class="material-symbols-outlined unselectable"> edit </a
+          <a
+            class="material-symbols-outlined unselectable"
+            [routerLink]="['edit']"
+            [queryParams]="{ user_id: user.id }"
+          >
+            edit </a
           ><a
             class="material-symbols-outlined unselectable"
             (click)="deactivateActivateUser(user)"

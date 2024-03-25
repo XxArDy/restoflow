@@ -12,8 +12,22 @@ const routes: Routes = [
   {
     path: 'users',
     loadChildren: () =>
-      import('../users/feature/user-list/user-list.module').then(
-        (m) => m.UserListModule
+      import('../users/feature/user-shell/user-shell.module').then(
+        (m) => m.UserShellModule
+      ),
+  },
+  {
+    path: 'restaurants',
+    loadChildren: () =>
+      import(
+        '../restaurants/feature/restaurant-shell/restaurant-shell.module'
+      ).then((m) => m.RestaurantShellModule),
+  },
+  {
+    path: 'tables',
+    loadChildren: () =>
+      import('../tables/feature/table-shell/table-shell.module').then(
+        (m) => m.TableShellModule
       ),
   },
 ];
