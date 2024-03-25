@@ -72,15 +72,15 @@ export class AccountService {
     localStorage.setItem('refreshToken', tokens.refreshToken);
   }
 
-  private refreshToken(): Observable<AuthResponseDto> {
+  private refreshToken(): Observable<AuthTokenDto> {
     const refreshToken = localStorage.getItem('refreshToken');
     return this.http
-      .post<AuthResponseDto>(`${this._apiUrl}auth/refreshToken`, {
+      .post<AuthTokenDto>(`${this._apiUrl}auth/refreshToken`, {
         refreshToken: refreshToken,
       })
       .pipe(
         tap((response) => {
-          this.storeTokens(response.authTokenDTO);
+          this.storeTokens(response);
         })
       );
   }
