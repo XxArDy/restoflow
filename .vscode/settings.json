@@ -6,6 +6,7 @@
     "notfound",
     "Pageable",
     "Restoflow",
+    "stompjs",
     "toastr",
     "unselectable"
   ]

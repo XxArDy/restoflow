@@ -10,10 +10,9 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AccountService } from './shared/data-access/account.service';
 
 export function tokenGetter() {
-  return localStorage.getItem('access_token');
+  return localStorage.getItem('accessToken');
 }
 
 @NgModule({
@@ -33,7 +32,7 @@ export function tokenGetter() {
       preventDuplicates: true,
     }),
   ],
-  providers: [provideAnimations(), provideToastr(), AccountService],
+  providers: [provideAnimations(), provideToastr()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
