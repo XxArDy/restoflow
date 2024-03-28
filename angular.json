@@ -58,10 +58,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fr-warlock:build:production"
+              "buildTarget": "fr-warlock:build:production"
             },
             "development": {
-              "browserTarget": "fr-warlock:build:development"
+              "buildTarget": "fr-warlock:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -69,7 +69,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fr-warlock:build"
+            "buildTarget": "fr-warlock:build"
           }
         },
         "test": {
