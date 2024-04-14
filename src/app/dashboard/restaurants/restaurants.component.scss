@@ -1,0 +1,13 @@
+@import "/src/scss/index";
+
+.super-admin-menu {
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+  row-gap: 10px;
+  width: 100%;
+}
+
+hr {
+  margin: 15px 0;
+  border: 1px solid;
+}

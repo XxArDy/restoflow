@@ -1,0 +1,34 @@
+<div class="header">
+  <button-primary
+    *ngIf="
+      authService.checkPermission([ROLES_CONFIG.superAdmin, ROLES_CONFIG.admin])
+    "
+    name="Create user"
+    (click)="openDialog()"
+  ></button-primary>
+
+  <div class="header__search" clickToFocus="searchInput">
+    <i class="material-symbols-outlined unselectable">search</i>
+    <input
+      #searchInput
+      id="searchInput"
+      type="text"
+      placeholder="Search"
+      (input)="updateQuery()"
+    />
+  </div>
+  <pagination-buttons
+    (leftArrow)="filterService.changePage(-1, getAllUsers())"
+    (rightArrow)="filterService.changePage(1, getAllUsers())"
+  ></pagination-buttons>
+</div>
+<div class="user-table">
+  <app-user-list
+    [users]="allUserList$"
+    (updateUser)="updateUser()"
+    (editUser)="openDialog($event)"
+  ></app-user-list>
+</div>
+<modal-window [isOpen]="isModalOpen" (closed)="closeDialog()">
+  <ng-template #modalContent></ng-template>
+</modal-window>

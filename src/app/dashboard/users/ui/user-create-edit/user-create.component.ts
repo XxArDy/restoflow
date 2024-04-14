@@ -1,0 +1,49 @@
+import { Component, inject, Input, output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/shared/data-access/user/user.service';
+import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
+import { IRole } from 'src/app/shared/model/user/role-dto';
+import { IUserDto } from 'src/app/shared/model/user/user-dto';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { UserFormComponent } from '../user-form/user-form.component';
+
+@Component({
+  selector: 'app-user-create',
+  template: `<div class="form-container">
+    <h1 class="form__title">Create user</h1>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+      <app-user-form
+        controlKey="userForm"
+        [roles]="roles"
+        [restaurants]="restaurants"
+      ></app-user-form>
+      <div class="form__btn">
+        <button type="submit" class="form__submit">Submit</button>
+      </div>
+    </form>
+  </div> `,
+  standalone: true,
+  imports: [SharedModule, UserFormComponent],
+})
+export class UserCreateComponent {
+  @Input() roles!: Observable<IRole[]>;
+  @Input() restaurants: IRestaurant[] = [];
+
+  updateUsers = output<void>();
+
+  userForm = new FormGroup({});
+
+  private _userService = inject(UserService);
+
+  async onSubmit(): Promise<void> {
+    if (this.userForm.valid) {
+      let user: Partial<IUserDto> = {
+        ...this.userForm.value,
+      };
+
+      if (await this._userService.createUser(user as IUserDto))
+        this.updateUsers.emit();
+    }
+  }
+}

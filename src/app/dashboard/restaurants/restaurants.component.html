@@ -1,0 +1,55 @@
+@if(authService.checkPermission(['super_admin'])){
+<div class="super-admin-menu">
+  <select
+    class="select-primary"
+    name="restaurants"
+    id="restaurants"
+    (change)="onRestaurantChange($event)"
+  >
+    <option disabled selected value="-1">Choose restaurant</option>
+    <option
+      *ngFor="let restaurant of restaurantList$ | async"
+      [value]="restaurant.id"
+      [selected]="selectedRestaurantId === restaurant.id"
+    >
+      {{ restaurant.name }}
+    </option>
+  </select>
+  <button-primary
+    name="Create restaurant"
+    (click)="openModal('restaurant')"
+  ></button-primary>
+</div>
+}
+
+<app-restaurant-edit
+  [restaurantId]="selectedRestaurantId"
+  (updateRestaurants)="updateSelectedRestaurant()"
+>
+</app-restaurant-edit>
+
+<hr />
+
+<app-category-list
+  [categories]="categoryList$"
+  [restaurantId]="selectedRestaurantId"
+  (createCategory)="openModal('category')"
+  (editCategory)="openModal('category', $event)"
+  (updateCategories)="updateCategory()"
+></app-category-list>
+
+@if (authService.checkPermission(['super_admin'])) {
+
+<hr />
+
+<app-units-list
+  (createUnit)="openModal('units')"
+  (editUnit)="openModal('units', $event)"
+  [units]="unitList$"
+  (updateUnits)="updateUnits()"
+></app-units-list>
+}
+
+<modal-window [isOpen]="isModalOpen" (closed)="closeModal()">
+  <ng-template #modalContent></ng-template>
+</modal-window>

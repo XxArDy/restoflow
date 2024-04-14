@@ -1,0 +1,59 @@
+@import "/src/scss/index";
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  @include flex-center;
+
+  &-content {
+    @include border;
+    background-color: #fefefe;
+    padding: 20px;
+    width: 80%;
+    overflow-y: auto;
+    position: relative;
+    min-height: 90%;
+
+    @include tablet {
+      width: 90%;
+    }
+
+    @include mobile {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &-header {
+    @include flex(null, center, flex-end);
+    padding: 2px 16px;
+    width: 100%;
+    height: $button-height;
+    position: absolute;
+    top: 15px;
+    right: 0;
+    z-index: 10;
+  }
+
+  &-close {
+    @include reset-button;
+    @include flex-center;
+    height: $button-height;
+    width: $button-height;
+
+    cursor: pointer;
+  }
+
+  &-body {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    @include abs-center;
+  }
+}

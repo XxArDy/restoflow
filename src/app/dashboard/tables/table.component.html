@@ -1,0 +1,109 @@
+<div class="table-page">
+  <div class="table-list">
+    <div class="table-list__buttons">
+      <select
+        *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
+        class="select-primary"
+        name="restaurants"
+        id="restaurants"
+        (change)="onRestaurantChange($event)"
+      >
+        <option disabled selected value="">Choose restaurant</option>
+        <option
+          *ngFor="let restaurant of tableMenuService.restaurantList$ | async"
+          [value]="restaurant.id"
+          [selected]="restaurant.id == tableMenuService.selectedRestaurantId"
+        >
+          {{ restaurant.name }}
+        </option>
+      </select>
+      @if(authService.isItUserRestaurant(tableMenuService.selectedRestaurantId)){
+      <button-primary
+        name="Create tables"
+        (click)="onOpenModal('create')"
+      ></button-primary>
+      }
+    </div>
+    @if(tableMenuService.selectedRestaurantId !== -1){
+    <div class="table-list__inner">
+      @for (table of tableMenuService.tableList$ | async; track $index) {
+      <app-table-item
+        [table]="table"
+        (deleteTable)="tableMenuService.updateTable()"
+        (editTable)="onOpenModal('edit', $event)"
+      ></app-table-item>
+      } @empty {
+      <span>Restaurant have`nt table</span>
+      }
+    </div>
+    <div class="table-list__inner-pagination">
+      <div class="table-list__pagination">
+        <i
+          class="material-symbols-outlined unselectable"
+          (click)="tableMenuService.pageNumber = -1"
+          >chevron_left</i
+        >
+        <i
+          class="material-symbols-outlined unselectable"
+          (click)="tableMenuService.pageNumber = 1"
+          >chevron_right</i
+        >
+      </div>
+    </div>
+    }
+  </div>
+  <div
+    *ngIf="
+      !(screenSizeService.isMobile$ | async) &&
+      tableMenuService.selectedTableId !== null
+    "
+    class="table-menu"
+  >
+    <div class="table-menu__header">
+      <div class="table-menu__buttons">
+        <button-primary
+          name="Reservation"
+          [appDisable]="tableMenuService.currentPage === 'reservation'"
+          (click)="tableMenuService.currentPage = 'reservation'"
+        ></button-primary>
+        <button-primary
+          name="Orders"
+          [appDisable]="tableMenuService.currentPage === 'orders'"
+          (click)="tableMenuService.currentPage = 'orders'"
+        ></button-primary>
+      </div>
+    </div>
+    <div class="table-menu__inner">
+      @if (tableMenuService.currentPage === 'orders') {
+      <app-table-order
+        [tableId]="tableMenuService.selectedTable | async"
+      ></app-table-order>
+      }
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="
+    (screenSizeService.isMobile$ | async) &&
+    tableMenuService.selectedTableId !== null
+  "
+  class="table-menu__mobile"
+>
+  <div class="table-menu__buttons">
+    <button-primary
+      name="Reservation"
+      (click)="onOpenModal('reservation')"
+    ></button-primary>
+    <button-primary
+      name="Orders"
+      (click)="onOpenModal('orders')"
+    ></button-primary>
+  </div>
+</div>
+
+<modal-window
+  [isOpen]="tableMenuService.isModalOpen"
+  (closed)="tableMenuService.onCloseModal()"
+  ><ng-template #modalContent></ng-template>
+</modal-window>

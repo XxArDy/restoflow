@@ -1,0 +1,60 @@
+@import "/src/scss/index";
+
+.table {
+  margin-top: 15px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  box-shadow: 1px 1px 0 1px $light, -1px -1px 0 1px $light;
+  border-radius: 15px 15px 0 0;
+  overflow: hidden;
+  color: $text-dark;
+
+  &__header {
+    tr {
+      background-color: $primary;
+      text-align: left;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+
+      th {
+        height: 64px;
+        vertical-align: middle;
+      }
+    }
+
+    span {
+      vertical-align: middle;
+    }
+  }
+
+  &__body {
+    tr {
+      border-bottom: 1px solid #dddddd;
+
+      &:nth-of-type(even) {
+        background-color: #f2f1f0;
+      }
+
+      &:last-of-type {
+        border-bottom: 5px solid $primary;
+      }
+    }
+  }
+
+  &__functions {
+    padding: 0 !important;
+    width: auto;
+
+    button-edit {
+      margin: 0 10px;
+    }
+  }
+
+  th,
+  td {
+    @include ellipse;
+    padding: 20px 15px;
+  }
+}

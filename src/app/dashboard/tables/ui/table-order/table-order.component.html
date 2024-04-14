@@ -1,0 +1,30 @@
+<div class="order__body">
+  <ng-container *ngIf="orderData$ | async as orderData; else elseOrderBody">
+    <div class="order__body-list">
+      <div
+        class="order__body-card"
+        *ngFor="let item of orderData.orderProductDtos"
+      >
+        <div class="order__body-card-image">
+          <img [src]="item.productImage" alt="Product Image" />
+        </div>
+        <div class="order__body-card-title">
+          <span>Name</span>
+          <span>{{ item.productName }}</span>
+        </div>
+        <div class="order__body-card-quantity">
+          <span>Quantity</span>
+          <span>{{ item.quantity }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #elseOrderBody>
+  <div class="order__body-inner">
+    <div class="order__body-image">
+      <img src="/assets/img/no_prodcuts_added.png" alt="No product added" />
+    </div>
+  </div>
+</ng-template>

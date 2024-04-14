@@ -1,0 +1,127 @@
+@import "/src/scss/index";
+
+.table {
+  &-page {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    // min-height: 90dvh;
+    // max-height: 100%;
+    height: 100%;
+    color: $text-dark;
+
+    @include tablet {
+      display: block;
+    }
+  }
+
+  &-list {
+    @include flex(column);
+    padding-right: 15px;
+    border: $border;
+    min-height: 90vh;
+    border-style: none dashed none none;
+
+    @include tablet {
+      border: none;
+      min-height: 10%;
+      margin-bottom: 100px;
+    }
+
+    &__buttons {
+      @include flex(null, center, space-between);
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+
+      @include mobile {
+        justify-content: center;
+      }
+    }
+
+    &__inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+      place-items: center;
+      padding: 20px;
+      border: $border;
+      border-radius: $border-radius;
+
+      &-pagination {
+        @include flex-center;
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+
+    &__pagination {
+      @include flex-center;
+      border: $border;
+      border-radius: $border-radius;
+      height: $button-height;
+
+      i {
+        @include flex-center;
+        width: 65px;
+        height: $button-height;
+        font-size: 30px;
+        cursor: pointer;
+
+        @include hover {
+          background-color: $light;
+        }
+
+        &:first-child {
+          border-right: $border;
+          border-radius: $border-radius 0 0 $border-radius;
+        }
+
+        &:last-child {
+          border-radius: 0 $border-radius $border-radius 0;
+        }
+      }
+    }
+  }
+
+  &-menu {
+    @include flex(column);
+
+    &__header {
+      width: 100%;
+      border: $border;
+      border-style: none none dashed none;
+    }
+
+    &__buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      padding: 0 20px;
+      margin-bottom: 15px;
+
+      button-primary {
+        width: 100%;
+
+        @include tablet {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    &__inner {
+      padding: 0 20px;
+      height: 100%;
+      width: 100%;
+    }
+
+    &__mobile {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: calc($button-height * 1.4);
+      padding: 10px;
+      border-top: $border;
+    }
+  }
+}
