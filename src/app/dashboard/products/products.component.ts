@@ -40,7 +40,7 @@ export class ProductsComponent implements OnInit {
     this.productHelperService.init();
     this.productHelperService.selectedRestaurantId =
       this.authService.currentUser?.restaurantId ?? -1;
-    this.filterService.pageElement = 9;
+    this.filterService.pageElement = 8;
     this.updateProduct();
   }
 

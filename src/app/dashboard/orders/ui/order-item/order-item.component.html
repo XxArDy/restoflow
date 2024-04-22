@@ -1,22 +1,16 @@
-<ng-container *ngIf="orderData$ | async as orderData">
-  @if (orderData) {
-
+<ng-container *ngIf="orderData$ | async as orderData; else emptyOrder">
   <div
     class="order-item"
-    [class]="
-      orderData.orderDto.status === 'ORDERED'
-        ? 'order-item__ordered'
-        : orderData.orderDto.status === 'COOKING'
-        ? 'order-item__cooking'
-        : orderData.orderDto.status === 'CHOOSING'
-        ? ''
-        : 'order-item__ready'
-    "
+    [class.ordered]="orderData.orderDto.status === 'ORDERED'"
+    [class.cooking]="orderData.orderDto.status === 'COOKING'"
+    [class.ready]="orderData.orderDto.status === 'READY'"
+    [class.choosing]="orderData.orderDto.status === 'CHOOSING'"
     mat-button
     [matMenuTriggerFor]="menu"
   >
     <div class="order-item__header">
       <span>Order #{{ orderData.orderDto.id }}</span>
+      <span>{{ tableName() }}</span>
     </div>
     <div class="order-item__body">
       <div class="order-item__body-list">
@@ -53,5 +47,17 @@
     <button mat-menu-item (click)="onStatusChanged('COOKING')">Cooking</button>
     <button mat-menu-item (click)="onStatusChanged('READY')">Ready</button>
   </mat-menu>
-  }
 </ng-container>
+<ng-template #emptyOrder>
+  <div class="order-item order-item__choosing">
+    <div class="order-item__header">
+      <span>Order #0</span>
+      <span>{{ tableName() }}</span>
+    </div>
+    <div class="order-item__body"></div>
+    <div class="order-item__footer">
+      <span>X 0 item</span>
+      <span>{{ 0 | currency }}</span>
+    </div>
+  </div>
+</ng-template>

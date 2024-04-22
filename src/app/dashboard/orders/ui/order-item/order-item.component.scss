@@ -1,73 +1,91 @@
 @import "/src/scss/index";
 
-.order-item {
-  display: flex;
-  flex-direction: column;
-  border-radius: $border-radius;
-  border: $border;
-  padding: 20px;
-  box-shadow: $shadow;
-  cursor: pointer;
+$margin: 5px;
 
-  &__ordered {
-    border-color: $danger;
-  }
+:host {
+  min-height: 120px;
 
-  &__cooking {
-    border-color: $edit;
-  }
+  .order-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: $border-radius;
+    border: $border;
+    padding: 20px;
+    box-shadow: $shadow;
+    cursor: pointer;
 
-  &__ready {
-    border-color: green;
-  }
-
-  &__body {
-    border-bottom: $border;
-    padding-bottom: 10px;
-
-    &-list {
-      display: grid;
-      grid-template-rows: auto;
-      gap: 10px;
+    &__header {
+      @include flex(row, center, space-between);
+      margin-bottom: $margin;
     }
 
-    &-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
-      height: 80px;
+    &__body {
+      border-bottom: $border;
+      border-top: $border;
+      padding: 10px 0;
 
-      @include tablet {
-        grid-template-columns: 1fr 1fr;
-        border: $border;
-        border-radius: $border-radius;
-      }
-
-      &-title,
-      &-quantity {
+      &-list {
         display: grid;
-        grid-template-rows: 1fr 1fr;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+        grid-template-rows: auto;
+        gap: 10px;
       }
 
-      &-image {
-        @include flex-center;
-        overflow: hidden;
-        border-radius: $border-radius;
+      &-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+        min-height: 50px;
+        max-height: 80px;
 
         @include tablet {
-          display: none;
+          grid-template-columns: 1fr 1fr;
+          border: $border;
+          border-radius: $border-radius;
+          padding: $margin 0;
+        }
+
+        &-title,
+        &-quantity {
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+        }
+
+        &-image {
+          @include flex-center;
+          overflow: hidden;
+          border-radius: $border-radius;
+
+          @include tablet {
+            display: none;
+          }
         }
       }
     }
+
+    &__footer {
+      @include flex(null, center, space-between);
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: $margin;
+    }
   }
 
-  &__footer {
-    @include flex(null, center, space-between);
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 5px;
+  .ordered {
+    border-color: $ordered;
+  }
+
+  .cooking {
+    border-color: $cooking;
+  }
+
+  .ready {
+    border-color: $ready;
+  }
+
+  .choosing {
+    border-color: $choosing;
   }
 }

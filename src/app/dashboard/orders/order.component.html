@@ -2,14 +2,58 @@
   <div class="order__header">
     <select-restaurant
       *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
-      [restaurantList$]="restaurantList$"
-      [selectedRestaurantId]="selectedRestaurantId$ | async"
+      [restaurantList$]="orderViewService.restaurantList$"
+      [selectedRestaurantId]="orderViewService.selectedRestaurantId$ | async"
       (changeRestaurant)="onRestaurantChange($event)"
     ></select-restaurant>
   </div>
   <div class="order__body">
-    @for (item of (tableList$ | async)?.content; track $index) {
-    <app-order-item [tableId]="item.id"></app-order-item>
-    }
+    <div class="order__body-list">
+      @for(item of orderViewService.selectedTableList; track $index) {
+      <app-order-item
+        [tableId]="item.id"
+        [tableName]="item.name"
+      ></app-order-item>
+      }
+    </div>
+    <div class="order__body-tables">
+      @for (item of orderViewService.tableList$ | async; track $index) {
+      <div class="order__body-tables-item">
+        <span>{{ item.name }}</span>
+        <button
+          (click)="
+            orderViewService.isInclude(item.id ?? '')
+              ? orderViewService.onRemoveTable(item.id ?? '')
+              : orderViewService.onSelectTable(item)
+          "
+        >
+          <span class="material-symbols-outlined">
+            {{ orderViewService.isInclude(item.id ?? "") ? "remove" : "add" }}
+          </span>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="order__footer">
+    <div class="order__footer-statistic"></div>
+    <div class="order__footer-legend">
+      <div class="order__footer-legend-item">
+        <div class="box choosing"></div>
+        - choosing
+      </div>
+      <div class="order__footer-legend-item">
+        <div class="box ordered"></div>
+        - ordered
+      </div>
+      <div class="order__footer-legend-item">
+        <div class="box cooking"></div>
+        - cooking
+      </div>
+      <div class="order__footer-legend-item">
+        <div class="box ready"></div>
+        - ready
+      </div>
+    </div>
   </div>
 </div>

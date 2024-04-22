@@ -1,7 +1,7 @@
-import { IOrderDto } from './order-dto';
+import { IOrder } from './order';
 import { IOrderProductDto } from './order-product-dto';
 
 export interface IOrderWs {
-  orderDto: IOrderDto;
+  orderDto: IOrder;
   orderProductDtos: IOrderProductDto[];
 }

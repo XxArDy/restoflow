@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { Observable } from 'rxjs';
@@ -14,8 +21,9 @@ import { environment } from 'src/environments/environment';
   standalone: true,
   imports: [SharedModule, MatButtonModule, MatMenuModule],
 })
-export class OrderItemComponent implements OnInit {
+export class OrderItemComponent implements OnInit, OnChanges {
   tableId = input.required<string | undefined>();
+  tableName = input<string>();
 
   get statuses() {
     return environment.orderStatus;
@@ -25,6 +33,11 @@ export class OrderItemComponent implements OnInit {
   private _webSocketService = inject(WebSocketService);
 
   ngOnInit(): void {
+    this._subscribeToOrder();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.orderData$ = null;
     this._subscribeToOrder();
   }
 

@@ -6,6 +6,11 @@
   --color-accent: #754c36;
   --color-primary: #fcdfc5;
 
+  --color-order-ordered: rgb(255, 184, 0);
+  --color-order-cooking: rgb(255, 255, 0);
+  --color-order-ready: rgb(0, 255, 0);
+  --color-order-choosing: #cfc5bf;
+
   --border: 2px solid var(--color-light);
   --border-radius: 10px;
   --border-radius-small: 5px;
@@ -47,6 +52,11 @@ $accent: var(--color-accent);
 $primary: var(--color-primary);
 $danger: var(--color-danger);
 $edit: var(--color-edit);
+
+$ordered: var(--color-order-ordered);
+$cooking: var(--color-order-cooking);
+$ready: var(--color-order-ready);
+$choosing: var(--color-order-choosing);
 
 $border: var(--border);
 $border-radius: var(--border-radius);

@@ -1,17 +1,4 @@
-import { IPageable } from '../helpers/pageable';
-import { ISort } from '../helpers/sort';
+import { IFilterDto } from '../helpers/filter-dto';
 import { ITable } from './table';
 
-export interface IPageTableDto {
-  totalPages: number;
-  totalElements: number;
-  size: number;
-  content: ITable[];
-  number: number;
-  sort: ISort;
-  numberOfElements: number;
-  pageable: IPageable;
-  first: boolean;
-  last: boolean;
-  empty: boolean;
-}
+export interface IPageTableDto extends IFilterDto<ITable> {}

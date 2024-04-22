@@ -1,16 +1,134 @@
 @import "/src/scss/index";
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
 
-.order {
-  display: flex;
-  flex-direction: column;
+  .order {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
-  &__header {
-    margin-bottom: 10px;
-  }
+    &__header {
+      margin-bottom: 10px;
+    }
 
-  &__body {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 20px;
+    &__body {
+      display: grid;
+      grid-template-columns: 4fr 1fr;
+      gap: 20px;
+
+      @include desktop {
+        grid-template-columns: 3fr 1fr;
+      }
+
+      @include tablet {
+        grid-template-columns: 2fr 1fr;
+      }
+
+      @include mobile {
+        grid-template-columns: 1.5fr 1fr;
+      }
+
+      &-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 20px;
+
+        @include desktop {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        @include tablet {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        @include mobile {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        }
+      }
+
+      &-tables {
+        @include flex(column, cover, flex-start);
+        flex-wrap: wrap;
+        gap: 10px;
+        overflow-y: auto;
+        height: 100%;
+        max-height: 90vh;
+
+        &-item {
+          @include flex(row, center, space-between);
+          @include border;
+          padding: 5px;
+
+          span {
+            @include ellipse;
+          }
+
+          button {
+            @include flex-center;
+            @include reset-button;
+            @include border;
+            cursor: pointer;
+
+            @include hover {
+              opacity: $opacity;
+            }
+          }
+        }
+      }
+    }
+
+    &__footer {
+      @include flex(row, center, space-between);
+      flex-wrap: wrap;
+      gap: 10px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 20px;
+      padding-bottom: 0;
+      border-top: $border;
+
+      &-statistic {
+      }
+
+      &-legend {
+        @include flex(row, center, flex-start);
+        flex-wrap: wrap;
+        gap: 10px;
+
+        &-item {
+          @include flex(row, center, flex-start);
+        }
+
+        .box {
+          @include square(25px);
+          @include border;
+        }
+
+        .choosing {
+          border-color: $choosing;
+          background-color: $choosing;
+        }
+
+        .ordered {
+          border-color: $ordered;
+          background-color: $ordered;
+        }
+
+        .cooking {
+          border-color: $cooking;
+          background-color: $cooking;
+        }
+
+        .ready {
+          border-color: $ready;
+          background-color: $ready;
+        }
+      }
+    }
   }
 }
