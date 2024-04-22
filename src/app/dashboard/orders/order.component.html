@@ -1,1 +1,15 @@
-Orders
+<div class="order">
+  <div class="order__header">
+    <select-restaurant
+      *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
+      [restaurantList$]="restaurantList$"
+      [selectedRestaurantId]="selectedRestaurantId$ | async"
+      (changeRestaurant)="onRestaurantChange($event)"
+    ></select-restaurant>
+  </div>
+  <div class="order__body">
+    @for (item of (tableList$ | async)?.content; track $index) {
+    <app-order-item [tableId]="item.id"></app-order-item>
+    }
+  </div>
+</div>

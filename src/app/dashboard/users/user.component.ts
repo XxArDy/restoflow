@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   inject,
   OnDestroy,
   OnInit,
@@ -29,7 +28,6 @@ import { UserListComponent } from './ui/user-list/user-list.component';
   providers: [FilterService],
 })
 export class UserComponent implements OnInit, OnDestroy {
-  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
   @ViewChild('modalContent', { read: ViewContainerRef })
   modalContent!: ViewContainerRef;
 
@@ -62,10 +60,6 @@ export class UserComponent implements OnInit, OnDestroy {
   updateUser(): void {
     this.allUserList$ = this.filterService.filter(this.getAllUsers());
     this.closeDialog();
-  }
-
-  updateQuery(): void {
-    this.filterService.setQuery(this.searchInput.nativeElement.value);
   }
 
   async openDialog(userId: number = -1): Promise<void> {

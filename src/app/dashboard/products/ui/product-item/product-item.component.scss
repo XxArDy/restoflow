@@ -1,0 +1,79 @@
+@import "/src/scss/index";
+
+:host {
+  height: 350px;
+}
+
+.product-item {
+  position: relative;
+  height: 350px;
+
+  &__carousel {
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+
+    .carousel {
+      height: 200px;
+      overflow: hidden;
+      width: 70%;
+      border-radius: $border-radius-large;
+    }
+
+    .slide {
+      @include flex-center;
+      height: 200px;
+
+      &__image {
+        height: 200px;
+        border-radius: $border-radius-large;
+        filter: drop-shadow($shadow);
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__body {
+    @include border;
+    width: 100%;
+    height: 250px;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+    place-items: end;
+    box-shadow: $shadow;
+    border-radius: $border-radius-large;
+  }
+
+  &__info {
+    @include flex(column, center, center);
+    width: 100%;
+    gap: 5px;
+
+    span {
+      @include ellipse;
+    }
+
+    &-name {
+      font-size: 20px;
+    }
+
+    &-price {
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    @include flex(row, null, space-between);
+    width: 100%;
+    gap: 10px;
+  }
+}

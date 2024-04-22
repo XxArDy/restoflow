@@ -1,0 +1,46 @@
+<div class="products">
+  <div class="products__header">
+    <select-restaurant
+      *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
+      [restaurantList$]="productHelperService.restaurantList$"
+      [selectedRestaurantId]="productHelperService.selectedRestaurantId"
+      (changeRestaurant)="productHelperService.selectedRestaurantId = $event"
+    ></select-restaurant>
+
+    <button-primary
+      *ngIf="
+        authService.checkPermission([
+          ROLES_CONFIG.superAdmin,
+          ROLES_CONFIG.admin
+        ]) &&
+        authService.isItUserRestaurant(
+          productHelperService.selectedRestaurantId
+        )
+      "
+      name="Create product"
+      (click)="onOpenModal('create')"
+    ></button-primary>
+
+    <search-primary [filterService]="filterService"></search-primary>
+
+    <pagination-buttons
+      (leftArrow)="filterService.changePage(-1)"
+      (rightArrow)="filterService.changePage(1)"
+    ></pagination-buttons>
+  </div>
+  <div class="products__body">
+    <app-product-item
+      *ngFor="let item of filteredProductList$ | async"
+      [product]="item"
+      (edit)="onOpenModal('update', $event)"
+      (updateProducts)="updateProduct()"
+    ></app-product-item>
+  </div>
+</div>
+
+<modal-window
+  [isOpen]="productHelperService.isModalOpen"
+  (closed)="productHelperService.closeModal()"
+>
+  <ng-template #modalContent></ng-template>
+</modal-window>

@@ -21,9 +21,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
         name="Create category"
         (click)="createCategory.emit()"
       ></button-primary>
+      <search-primary [filterService]="filterService"></search-primary>
       <pagination-buttons
-        (leftArrow)="filterService.changePage(-1, categories())"
-        (rightArrow)="filterService.changePage(1, categories())"
+        (leftArrow)="filterService.changePage(-1)"
+        (rightArrow)="filterService.changePage(1)"
       ></pagination-buttons>
     </div>
     <div class="category-list__body">

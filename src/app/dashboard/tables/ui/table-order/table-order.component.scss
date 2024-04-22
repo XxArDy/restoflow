@@ -34,8 +34,8 @@
       grid-template-columns: 1fr 1fr 1fr;
       column-gap: 20px;
       padding: 5px;
-      border: var(--border);
-      border-radius: var(--border-radius);
+      border: $border;
+      border-radius: $border-radius;
       margin-bottom: 10px;
       height: 100px;
 

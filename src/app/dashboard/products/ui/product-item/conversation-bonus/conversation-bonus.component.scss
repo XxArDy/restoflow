@@ -1,0 +1,77 @@
+@import "/src/scss/index";
+
+$edit-dialog-width: 100%;
+
+:host {
+  font-size: inherit;
+  position: relative;
+  @include flex-center;
+  width: 100%;
+
+  .conversation-bonus {
+    @include ellipse;
+    @include flex-center;
+    height: 100%;
+
+    &__editor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      width: $edit-dialog-width;
+      padding: 5px;
+      padding-right: 0;
+      display: flex;
+      flex-direction: row;
+      background-color: #fff;
+      @include border;
+    }
+
+    &__bonus {
+      flex: 1 1 auto;
+      outline: none;
+      line-height: calc(1em + 5px);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 80%;
+      padding: 5px;
+    }
+
+    &__buttons {
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 5px;
+      @include flex(row, center);
+
+      button {
+        @include reset-button;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .ok-icon {
+        width: 14px !important;
+        height: 14px !important;
+
+        &:not(:hover) {
+          filter: grayscale(1);
+        }
+      }
+
+      .cancel-icon:not(:hover) {
+        opacity: $opacity;
+      }
+    }
+  }
+
+  .edit-icon {
+    flex-shrink: 0;
+    margin-left: 5px;
+  }
+
+  &:not(:hover) {
+    .edit-icon {
+      display: none;
+    }
+  }
+}

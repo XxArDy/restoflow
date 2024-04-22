@@ -15,23 +15,25 @@ import { IUnit } from 'src/app/shared/model/product/unit';
   template: `<div class="form-container">
     <h1 class="form__title">Create unit</h1>
     <form [formGroup]="unitForm" (ngSubmit)="onSubmit()" class="form">
-      <div class="form__group">
-        <label for="name" class="form__label">Name</label>
-        <input
-          type="text"
-          id="name"
-          formControlName="unitName"
-          class="form__input"
-        />
-      </div>
-      <div class="form__group">
-        <label for="name" class="form__label">Abbreviation</label>
-        <input
-          type="text"
-          id="name"
-          formControlName="abbreviation"
-          class="form__input"
-        />
+      <div class="form__group-line">
+        <div class="form__group">
+          <label for="name" class="form__label">Name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="unitName"
+            class="form__input"
+          />
+        </div>
+        <div class="form__group">
+          <label for="name" class="form__label">Abbreviation</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="abbreviation"
+            class="form__input"
+          />
+        </div>
       </div>
       <div class="form__btn">
         <button type="submit" class="form__submit">Submit</button>

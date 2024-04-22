@@ -83,9 +83,8 @@ export class RestaurantsComponent implements OnInit {
     this.unitList$ = this._unitService.getAllUnits();
   }
 
-  onRestaurantChange(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    this.selectedRestaurantId = Number(target.value);
+  onRestaurantChange(target: number): void {
+    this.selectedRestaurantId = target;
     this.updateSelectedRestaurant();
   }
 

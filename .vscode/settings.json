@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "callout",
+    "danielmoncada",
+    "datetime",
     "Dtos",
     "measurment",
     "notfound",
@@ -9,5 +11,6 @@
     "stompjs",
     "toastr",
     "unselectable"
-  ]
+  ],
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

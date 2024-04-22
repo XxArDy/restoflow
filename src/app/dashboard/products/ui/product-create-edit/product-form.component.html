@@ -1,0 +1,152 @@
+<div class="form__group-line">
+  <div class="form__group">
+    <label class="form__label" for="name">Name:</label>
+    <input
+      class="form__input"
+      type="text"
+      id="name"
+      name="name"
+      formControlName="name"
+      required
+    />
+  </div>
+
+  <div class="form__group">
+    <label class="form__label" for="categoryId">Category:</label>
+    <select
+      class="form__select"
+      id="categoryId"
+      name="categoryId"
+      formControlName="categoryId"
+      required
+    >
+      <option
+        *ngFor="let category of categories | async"
+        [value]="category.id"
+        [selected]="category.id === product?.categoryId"
+      >
+        {{ category.name }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="form__group">
+  <label class="form__label" for="description">Description:</label>
+  <textarea
+    id="description"
+    name="description"
+    formControlName="description"
+    class="form__textarea"
+    required
+  ></textarea>
+</div>
+
+<div class="form__group-line">
+  <div class="form__group">
+    <label class="form__label" for="bonusPoints">Bonus point:</label>
+    <input
+      class="form__input"
+      type="number"
+      id="bonusPoints"
+      name="bonusPoints"
+      formControlName="bonusPoints"
+      required
+      min="0"
+    />
+  </div>
+
+  <div class="form__group">
+    <label class="form__label" for="price">Price:</label>
+    <input
+      class="form__input"
+      type="number"
+      id="price"
+      name="price"
+      formControlName="price"
+      required
+      min="0"
+    />
+  </div>
+
+  <div class="form__group">
+    <label class="form__label" for="quantity">Quantity:</label>
+    <input
+      class="form__input"
+      type="number"
+      id="quantity"
+      name="quantity"
+      formControlName="quantity"
+      required
+      min="0"
+    />
+  </div>
+</div>
+
+<div class="form__group-line">
+  <div class="form__group">
+    <label class="form__label" for="measurmentUnitId">Measurement Unit:</label>
+    <select
+      class="form__select"
+      id="measurmentUnitId"
+      name="measurmentUnitId"
+      formControlName="measurmentUnitId"
+      required
+    >
+      <option
+        *ngFor="let unit of units | async"
+        [value]="unit.id"
+        [selected]="unit.id === product?.measurmentUnitId"
+      >
+        {{ unit.unitName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form__group">
+    <label class="form__label" for="cookingTime">Cooking Time (minutes):</label>
+    <input
+      class="form__input"
+      type="number"
+      id="cookingTime"
+      name="cookingTime"
+      formControlName="cookingTime"
+      required
+      min="0"
+    />
+  </div>
+</div>
+<div class="form__group">
+  <label class="form__label" for="ingredients">Ingredients:</label>
+  <input
+    class="form__input"
+    type="text"
+    id="ingredients"
+    name="ingredients"
+    formControlName="ingredients"
+    placeholder="Please enter ingredients, separated by commas"
+    required
+  />
+</div>
+
+<div class="form__group">
+  <label class="form__label" for="images">Images:</label>
+  <input
+    class="form__file"
+    type="file"
+    id="images"
+    name="images"
+    (change)="onImageSelect($event)"
+    multiple
+  />
+</div>
+
+@if(isEditing) {
+<div class="form__group-line-img">
+  @for (item of productImages; track $index) {
+  <div class="form__group-img">
+    <img src="{{ item.url }}" alt="{{ item.fileName }}" />
+    <button-delete (click)="onDeleteImgButton(item.id)"></button-delete>
+  </div>
+  }
+</div>
+}

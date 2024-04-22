@@ -1,20 +1,11 @@
 @if(authService.checkPermission(['super_admin'])){
 <div class="super-admin-menu">
-  <select
-    class="select-primary"
-    name="restaurants"
-    id="restaurants"
-    (change)="onRestaurantChange($event)"
-  >
-    <option disabled selected value="-1">Choose restaurant</option>
-    <option
-      *ngFor="let restaurant of restaurantList$ | async"
-      [value]="restaurant.id"
-      [selected]="selectedRestaurantId === restaurant.id"
-    >
-      {{ restaurant.name }}
-    </option>
-  </select>
+  <select-restaurant
+    *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
+    [restaurantList$]="restaurantList$"
+    [selectedRestaurantId]="selectedRestaurantId"
+    (changeRestaurant)="onRestaurantChange($event)"
+  ></select-restaurant>
   <button-primary
     name="Create restaurant"
     (click)="openModal('restaurant')"

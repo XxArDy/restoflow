@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, ViewContainerRef } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { CategoryCreateComponent } from 'src/app/dashboard/restaurants/ui/category-create-edit/category-create.component';
 import { CategoryEditComponent } from 'src/app/dashboard/restaurants/ui/category-create-edit/category-edit.component';
@@ -10,7 +9,7 @@ import { UnitsEditComponent } from 'src/app/dashboard/restaurants/ui/units-creat
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
 import { environment } from 'src/environments/environment';
 import { IUserDto } from '../../model/user/user-dto';
-import { AuthService } from '../user/auth.service';
+import { BasicFetchService } from '../helpers/basic-fetch.service';
 import { RestaurantsComponent } from './../../../dashboard/restaurants/restaurants.component';
 import { CategoryService } from './category.service';
 import { UnitsService } from './units.service';
@@ -26,10 +25,9 @@ export class RestaurantService {
   isModalOpen = false;
 
   private _http = inject(HttpClient);
-  private _toastr = inject(ToastrService);
-  private _authService = inject(AuthService);
   private _categoryService = inject(CategoryService);
   private _unitService = inject(UnitsService);
+  private _basicFetchService = inject(BasicFetchService);
 
   getAllRestaurants(): Observable<IRestaurant[]> {
     return this._http
@@ -47,64 +45,26 @@ export class RestaurantService {
   }
 
   async deleteRestaurant(id: number): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}public/restaurant/${id}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Restaurant successfully deleted');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this.baseUrl}public/restaurant/${id}`
+    );
   }
 
   async updateRestaurant(
     id: number,
     restaurant: IRestaurant
-  ): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}public/restaurant/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(restaurant),
-        headers: await this._authService.getAuthHeaderAsync(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Restaurant successfully updated');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+  ): Promise<IRestaurant | null> {
+    return this._basicFetchService.update<IRestaurant>(
+      restaurant,
+      `${this.baseUrl}public/restaurant/${id}`
+    );
   }
 
-  async createRestaurant(restaurant: IRestaurant): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}public/restaurant`, {
-        method: 'POST',
-        body: JSON.stringify(restaurant),
-        headers: await this._authService.getAuthHeaderAsync(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Restaurant successfully created');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+  async createRestaurant(restaurant: IRestaurant): Promise<IRestaurant | null> {
+    return this._basicFetchService.create<IRestaurant>(
+      restaurant,
+      `${this.baseUrl}public/restaurant`
+    );
   }
 
   getRestaurantName(user: IUserDto): string {

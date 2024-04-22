@@ -1,0 +1,57 @@
+<ng-container *ngIf="orderData$ | async as orderData">
+  @if (orderData) {
+
+  <div
+    class="order-item"
+    [class]="
+      orderData.orderDto.status === 'ORDERED'
+        ? 'order-item__ordered'
+        : orderData.orderDto.status === 'COOKING'
+        ? 'order-item__cooking'
+        : orderData.orderDto.status === 'CHOOSING'
+        ? ''
+        : 'order-item__ready'
+    "
+    mat-button
+    [matMenuTriggerFor]="menu"
+  >
+    <div class="order-item__header">
+      <span>Order #{{ orderData.orderDto.id }}</span>
+    </div>
+    <div class="order-item__body">
+      <div class="order-item__body-list">
+        <div
+          class="order-item__body-card"
+          *ngFor="let item of orderData.orderProductDtos"
+        >
+          <div class="order-item__body-card-image">
+            <img [src]="item.productImage" alt="Product Image" />
+          </div>
+          <div class="order-item__body-card-title">
+            <span>Name</span>
+            <span>{{ item.productName }}</span>
+          </div>
+          <div class="order-item__body-card-quantity">
+            <span>Quantity</span>
+            <span>{{ item.quantity }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-item__footer">
+      <span
+        >X {{ orderData.orderProductDtos.length }}
+        {{ orderData.orderProductDtos.length === 1 ? "item" : "items" }}</span
+      >
+      <span>{{ orderData.orderDto.sumToPay | currency }}</span>
+    </div>
+  </div>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onStatusChanged('ORDERED')">Ordered</button>
+    <button mat-menu-item (click)="onStatusChanged('COOKING')">Cooking</button>
+    <button mat-menu-item (click)="onStatusChanged('READY')">Ready</button>
+  </mat-menu>
+  }
+</ng-container>

@@ -1,0 +1,27 @@
+<div class="conversation-bonus" (click)="edit()">
+  {{ product()?.bonusPoints }}
+</div>
+<span class="edit-icon material-symbols-outlined"> edit </span>
+
+<div class="conversation-bonus__editor" *ngIf="isEditing">
+  <div
+    #editor
+    class="conversation-bonus__bonus"
+    (keydown.enter)="apply($event)"
+    (keydown)="numericInput($event)"
+    autoFocus
+    [selectAfterFocus]="true"
+    contenteditable="true"
+  >
+    {{ product()?.bonusPoints }}
+  </div>
+
+  <div class="conversation-bonus__buttons">
+    <button type="button" (click)="apply($event)">
+      <span class="ok-icon material-symbols-outlined"> done </span>
+    </button>
+    <button type="button" (click)="cancel()">
+      <span class="cancel-icon material-symbols-outlined"> cancel </span>
+    </button>
+  </div>
+</div>

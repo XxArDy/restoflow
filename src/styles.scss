@@ -1,12 +1,4 @@
 @import "scss/index";
 
 @import "ngx-toastr/toastr";
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
+@import "@danielmoncada/angular-datetime-picker/assets/style/picker.min.css";

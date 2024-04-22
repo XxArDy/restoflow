@@ -1,11 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  map,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, of } from 'rxjs';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { UserService } from '../user/user.service';
 
@@ -16,11 +10,10 @@ export class FilterService {
   private _pageElement = new BehaviorSubject<number>(10);
   private _sortField = new BehaviorSubject<string>('');
   private _sortDirection = new BehaviorSubject<'asc' | 'desc'>('asc');
+  private _totalPages = new BehaviorSubject<number>(0);
 
   private _userService = inject(UserService);
   private _restaurantService = inject(RestaurantService);
-
-  private unsubscribe$ = new Subscription();
 
   set pageElement(number: number) {
     this._pageElement.next(number);
@@ -34,19 +27,16 @@ export class FilterService {
     return this._sortDirection.getValue();
   }
 
-  public changePage(number: number, list: Observable<any[]> | null): void {
-    if (list === null) return;
-    this.unsubscribe$ = list.subscribe((allUserList) => {
-      const totalPages = Math.ceil(
-        allUserList.length / this._pageElement.value
-      );
-      if (
-        this._currentPage.value + number >= 1 &&
-        this._currentPage.value + number <= totalPages
-      )
-        this._currentPage.next(this._currentPage.value + number);
-      this._unsubscribe();
-    });
+  get currentTotalPage() {
+    return `${this._currentPage.getValue()} of ${this._totalPages.getValue()}`;
+  }
+
+  public changePage(number: number): void {
+    if (
+      this._currentPage.value + number >= 1 &&
+      this._currentPage.value + number <= this._totalPages.getValue()
+    )
+      this._currentPage.next(this._currentPage.value + number);
   }
 
   public setQuery(query: string) {
@@ -65,7 +55,8 @@ export class FilterService {
     }
   }
 
-  public filter(list: Observable<any[]>): Observable<any[]> {
+  public filter(list: Observable<any[]> | null): Observable<any[]> {
+    if (!list) return of([]);
     return combineLatest([
       this._query,
       this._sortField,
@@ -101,9 +92,7 @@ export class FilterService {
                   )
                 );
               } else {
-                return Object.values(item).some((value) =>
-                  value?.toString().toLowerCase().includes(query.toLowerCase())
-                );
+                return this._checkNested(Object.values(item), query);
               }
             });
           }
@@ -131,6 +120,10 @@ export class FilterService {
               return 0;
             });
           }
+          const totalPages = Math.ceil(
+            queryList.length / this._pageElement.value
+          );
+          this._totalPages.next(totalPages);
 
           let filteredList = queryList.slice(
             (currentPage - 1) * pageElement,
@@ -142,7 +135,16 @@ export class FilterService {
     );
   }
 
-  private _unsubscribe(): void {
-    this.unsubscribe$.unsubscribe();
+  private _checkNested(obj: any[], query: string): boolean {
+    return Object.values(obj).some((value) => {
+      if (typeof value === 'object' && value !== null) {
+        return this._checkNested(value, query);
+      } else if (
+        value?.toString().toLowerCase().includes(query.toLowerCase())
+      ) {
+        return true;
+      }
+      return false;
+    });
   }
 }

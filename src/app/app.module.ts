@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import {
   BrowserAnimationsModule,
   provideAnimations,
@@ -11,6 +11,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ErrorInterceptor } from './shared/data-access/helpers/error.interceptor';
 import { SharedModule } from './shared/shared.module';
 
 export function tokenGetter() {
@@ -39,6 +40,7 @@ export function tokenGetter() {
     provideAnimations(),
     provideToastr(),
     provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

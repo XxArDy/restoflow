@@ -1,0 +1,73 @@
+@import "/src/scss/index";
+
+.order-item {
+  display: flex;
+  flex-direction: column;
+  border-radius: $border-radius;
+  border: $border;
+  padding: 20px;
+  box-shadow: $shadow;
+  cursor: pointer;
+
+  &__ordered {
+    border-color: $danger;
+  }
+
+  &__cooking {
+    border-color: $edit;
+  }
+
+  &__ready {
+    border-color: green;
+  }
+
+  &__body {
+    border-bottom: $border;
+    padding-bottom: 10px;
+
+    &-list {
+      display: grid;
+      grid-template-rows: auto;
+      gap: 10px;
+    }
+
+    &-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      height: 80px;
+
+      @include tablet {
+        grid-template-columns: 1fr 1fr;
+        border: $border;
+        border-radius: $border-radius;
+      }
+
+      &-title,
+      &-quantity {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      &-image {
+        @include flex-center;
+        overflow: hidden;
+        border-radius: $border-radius;
+
+        @include tablet {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    @include flex(null, center, space-between);
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 5px;
+  }
+}

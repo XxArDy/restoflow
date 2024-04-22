@@ -12,20 +12,23 @@ import { TableOrderComponent } from 'src/app/dashboard/tables/ui/table-order/tab
 import { RestaurantService } from 'src/app/shared/data-access/restaurant/restaurant.service';
 import { IRestaurant } from '../../model/restaurant/restaurant';
 import { ITable } from '../../model/table/table';
+import { ITableReservation } from '../../model/table/table-reservation';
+import { ReservationService } from './reservation.service';
 import { TableService } from './table.service';
 
 @Injectable()
 export class TableMenuService {
   restaurantList$: Observable<IRestaurant[]> | null = null;
   tableList$: Observable<ITable[]> | null = null;
+  reservationList$: Observable<ITableReservation[]> | null = null;
 
   isModalOpen = false;
 
   private _selectedTableId = new BehaviorSubject<string | null>(null);
   private _selectedRestaurantId = new BehaviorSubject<number>(-1);
-  private _pageNumber = new BehaviorSubject<number>(0);
-  private _maxPages = 0;
   private _currentPage: 'reservation' | 'orders' = 'reservation';
+  private _currentTimer = new BehaviorSubject<Date>(new Date());
+  private _selectedDate = new BehaviorSubject<Date>(new Date());
 
   selectedTable = this._selectedTableId.asObservable();
 
@@ -38,8 +41,6 @@ export class TableMenuService {
   }
 
   set selectedRestaurantId(value: number) {
-    this._pageNumber.next(0);
-    this._maxPages = 0;
     this._selectedRestaurantId.next(value);
   }
 
@@ -55,18 +56,28 @@ export class TableMenuService {
     this._currentPage = value;
   }
 
-  set pageNumber(value: number) {
-    const temp = this._pageNumber.getValue() + value;
-    if (temp <= this._maxPages && temp >= 0) {
-      this._pageNumber.next(temp);
-    }
+  set selectedDate(value: Date) {
+    this._selectedDate.next(value);
+  }
+
+  get selectedDate$() {
+    return this._selectedDate.asObservable();
+  }
+  get selectedDate() {
+    return this._selectedDate.getValue();
+  }
+
+  get currentTimer$() {
+    return this._currentTimer.asObservable();
   }
 
   private _restaurantService = inject(RestaurantService);
   private _tableService = inject(TableService);
+  private _reservationService = inject(ReservationService);
 
   public init(): void {
     this.restaurantList$ = this._restaurantService.getAllRestaurants();
+    this.reservationList$ = this._getAllReservation();
     this.updateTable();
   }
 
@@ -102,6 +113,7 @@ export class TableMenuService {
         orderModal.instance.tableId = this.selectedTableId;
         break;
       case 'reservation':
+        // TODO: create reservation component
         break;
     }
     this.isModalOpen = true;
@@ -111,17 +123,46 @@ export class TableMenuService {
     this.isModalOpen = false;
   }
 
+  public onTimerOpen(): void {
+    const date = new Date();
+    const minutes = date.getMinutes();
+    const hours = date.getHours();
+
+    const roundedMinutes = minutes >= 30 ? 60 : 30;
+    const roundedHours = roundedMinutes === 60 ? hours + 1 : hours;
+
+    date.setHours(roundedHours);
+    date.setMinutes(roundedMinutes % 60);
+    date.setSeconds(0);
+
+    this._currentTimer.next(date);
+  }
+
+  public onDataSelected(date: Date): void {
+    this._selectedDate.next(date);
+  }
+
   private _getAllTable(): Observable<ITable[]> {
-    return combineLatest([this._selectedRestaurantId, this._pageNumber]).pipe(
-      switchMap(([selectedRestaurantId, pageNumber]) =>
+    return combineLatest([this._selectedRestaurantId]).pipe(
+      switchMap(([selectedRestaurantId]) =>
         this._tableService
-          .getAllTablesByRestaurantId(selectedRestaurantId, pageNumber, 9)
+          .getAllTablesByRestaurantId(selectedRestaurantId)
           .pipe(
             map((res) => {
-              this._maxPages = res.totalPages - 1;
-              return res.content;
+              return res.content.sort((a, b) => a.numOfSeats - b.numOfSeats);
             })
           )
+      )
+    );
+  }
+
+  private _getAllReservation(): Observable<ITableReservation[]> {
+    return combineLatest([this._selectedRestaurantId, this._selectedDate]).pipe(
+      switchMap(([selectedRestaurantId, selectedDate]) =>
+        this._reservationService.getAllReservations(
+          selectedRestaurantId,
+          selectedDate
+        )
       )
     );
   }

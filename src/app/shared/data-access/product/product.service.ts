@@ -7,6 +7,8 @@ import { IProductContent } from 'src/app/shared/model/product/product-content';
 import { IProductDto } from 'src/app/shared/model/product/product-dto';
 import { IRestaurantImageDto } from 'src/app/shared/model/restaurant/restaurant-image-dto';
 import { environment } from 'src/environments/environment';
+import { IRestaurantImage } from '../../model/restaurant/restaurant-image';
+import { BasicFetchService } from '../helpers/basic-fetch.service';
 import { AuthService } from '../user/auth.service';
 
 @Injectable({
@@ -16,8 +18,9 @@ export class ProductService {
   private _baseUrl = environment.apiDineUrl;
 
   private _http = inject(HttpClient);
+  private _basicFetchService = inject(BasicFetchService);
   private _authService = inject(AuthService);
-  private _toastr = inject(ToastrService);
+  private _toastrService = inject(ToastrService);
 
   getAllProduct(
     restaurantId: number,
@@ -56,87 +59,64 @@ export class ProductService {
     return await response.json();
   }
 
-  async createProduct(product: IProduct): Promise<boolean> {
-    try {
-      const headers = await this._authService.getAuthHeaderAsync();
-      const response = await fetch(`${this._baseUrl}private/product`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(product),
-      });
+  async createProduct(product: IProduct): Promise<IProduct | null> {
+    return this._basicFetchService.create<IProduct>(
+      product,
+      `${this._baseUrl}private/product`
+    );
+  }
 
-      if (!response.ok) {
-        throw new Error('Error creating product');
+  async createProductImage(
+    productId: number,
+    images: File[]
+  ): Promise<IRestaurantImage | null> {
+    const formData = new FormData();
+
+    images.forEach((image) => {
+      formData.append('images', image);
+    });
+
+    try {
+      const response = await fetch(
+        `${this._baseUrl}private/product/image/${productId}`,
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: 'Bearer ' + this._authService.getToken(),
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (!response.ok || data.error) {
+        throw new Error('Image upload failed');
       }
-      this._toastr.success('Product successfully created');
-      return true;
+
+      this._toastrService.success('Image upload successfully');
+      return data;
     } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
+      this._toastrService.error(error.message, 'Error');
+      return null;
     }
   }
 
   async deleteProduct(id: number): Promise<boolean> {
-    try {
-      const headers = await this._authService.getAuthHeaderAsync();
-      const response = await fetch(`${this._baseUrl}private/product/${id}`, {
-        method: 'DELETE',
-        headers,
-      });
-
-      if (!response.ok) {
-        throw new Error('Error deleting product');
-      }
-      this._toastr.success('Product successfully deleted');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this._baseUrl}private/product/${id}`
+    );
   }
 
-  async updateProduct(product: IProduct): Promise<boolean> {
-    try {
-      const headers = await this._authService.getAuthHeaderAsync();
-      const response = await fetch(
-        `${this._baseUrl}private/product/${product.id}`,
-        {
-          method: 'PUT',
-          headers,
-          body: JSON.stringify(product),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Error updating product');
-      }
-      this._toastr.success('Product successfully updated');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+  async updateProduct(product: IProduct): Promise<IProduct | null> {
+    return this._basicFetchService.update<IProduct>(
+      product,
+      `${this._baseUrl}private/product/${product.id}`
+    );
   }
 
   async deleteProductImage(id: number): Promise<boolean> {
-    try {
-      const headers = await this._authService.getAuthHeaderAsync();
-      const response = await fetch(
-        `${this._baseUrl}private/product/image/${id}`,
-        {
-          method: 'DELETE',
-          headers,
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Error deleting product image');
-      }
-      this._toastr.success('Product image successfully deleted');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this._baseUrl}private/product/image/${id}`
+    );
   }
 }

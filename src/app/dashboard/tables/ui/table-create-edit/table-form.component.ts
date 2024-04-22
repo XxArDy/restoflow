@@ -15,18 +15,25 @@ import { environment } from 'src/environments/environment';
     [class]="!isEditing() ? 'form__array-fieldset' : ''"
     [formGroupName]="formName()"
   >
-    <div class="form__group">
-      <label for="name" class="form__label">Name</label>
-      <input type="text" id="name" formControlName="name" class="form__input" />
-    </div>
-    <div class="form__group">
-      <label for="numOfSeats" class="form__label">Seats count</label>
-      <input
-        type="number"
-        id="numOfSeats"
-        formControlName="numOfSeats"
-        class="form__input"
-      />
+    <div class="form__group-line">
+      <div class="form__group">
+        <label for="name" class="form__label">Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form__input"
+        />
+      </div>
+      <div class="form__group">
+        <label for="numOfSeats" class="form__label">Seats count</label>
+        <input
+          type="number"
+          id="numOfSeats"
+          formControlName="numOfSeats"
+          class="form__input"
+        />
+      </div>
     </div>
     <div class="form__group">
       <label for="statusId" class="form__label">Status</label>

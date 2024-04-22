@@ -16,6 +16,7 @@ import { Component, input } from '@angular/core';
     border: $border;
     border-radius: $border-radius;
     cursor: pointer;
+    box-shadow: $shadow;
 
     &:not(.disabled):not([disabled]) {
       @include hover {

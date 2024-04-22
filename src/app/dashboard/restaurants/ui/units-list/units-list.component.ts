@@ -20,8 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
         (click)="createUnit.emit()"
       ></button-primary>
       <pagination-buttons
-        (leftArrow)="filterService.changePage(-1, units())"
-        (rightArrow)="filterService.changePage(1, units())"
+        (leftArrow)="filterService.changePage(-1)"
+        (rightArrow)="filterService.changePage(1)"
       ></pagination-buttons>
     </div>
     <div class="unit-list__body">

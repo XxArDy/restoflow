@@ -19,6 +19,7 @@ import { Component, output } from '@angular/core';
     border-radius: $border-radius;
     @include flex-center;
     height: $button-height;
+    box-shadow: $shadow;
 
     i {
       @include flex-center;

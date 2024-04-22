@@ -1,0 +1,23 @@
+<span>Date</span>
+<input
+  [min]="minDate"
+  [owlDateTimeTrigger]="fromDatePicker"
+  [owlDateTime]="fromDatePicker"
+  [value]="tableMenuService.selectedDate$ | async"
+/>
+<owl-date-time
+  [pickerType]="'calendar'"
+  [firstDayOfWeek]="1"
+  (dateSelected)="tableMenuService.onDataSelected($event)"
+  #fromDatePicker
+></owl-date-time>
+
+<span>Time</span>
+<input [owlDateTimeTrigger]="fromTimePicker" [owlDateTime]="fromTimePicker" />
+<owl-date-time
+  [pickerType]="'timer'"
+  [stepMinute]="30"
+  [startAt]="tableMenuService.currentTimer$ | async"
+  (beforePickerOpen)="tableMenuService.onTimerOpen()"
+  #fromTimePicker
+></owl-date-time>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrderComponent } from './dashboard/orders/order.component';
+import { ProductsComponent } from './dashboard/products/products.component';
 import { RestaurantsComponent } from './dashboard/restaurants/restaurants.component';
 import { TableComponent } from './dashboard/tables/table.component';
 import { UserComponent } from './dashboard/users/user.component';
@@ -55,7 +56,7 @@ const routes: Routes = [
         path: ROUTING_CONFIG.productsUrl,
         resolve: { user: UserResolver },
         canActivate: [AuthGuard],
-        component: OrderComponent,
+        component: ProductsComponent,
       },
       {
         path: ROUTING_CONFIG.statisticsUrl,

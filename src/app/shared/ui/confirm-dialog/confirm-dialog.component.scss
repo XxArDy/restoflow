@@ -1,0 +1,53 @@
+@import "/src/scss/index";
+
+:host {
+  @include border;
+
+  .mat-dialog-container {
+    padding: 20px;
+    @include flex(column, center, center);
+  }
+
+  h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  .mat-dialog-content {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:first-child {
+      background-color: $edit;
+      color: #fff;
+
+      &:hover {
+        opacity: $opacity;
+      }
+    }
+
+    button:last-child {
+      background-color: $danger;
+      color: #fff;
+
+      &:hover {
+        opacity: $opacity;
+      }
+    }
+  }
+}

@@ -7,19 +7,10 @@
     (click)="openDialog()"
   ></button-primary>
 
-  <div class="header__search" clickToFocus="searchInput">
-    <i class="material-symbols-outlined unselectable">search</i>
-    <input
-      #searchInput
-      id="searchInput"
-      type="text"
-      placeholder="Search"
-      (input)="updateQuery()"
-    />
-  </div>
+  <search-primary [filterService]="filterService"></search-primary>
   <pagination-buttons
-    (leftArrow)="filterService.changePage(-1, getAllUsers())"
-    (rightArrow)="filterService.changePage(1, getAllUsers())"
+    (leftArrow)="filterService.changePage(-1)"
+    (rightArrow)="filterService.changePage(1)"
   ></pagination-buttons>
 </div>
 <div class="user-table">
@@ -28,6 +19,9 @@
     (updateUser)="updateUser()"
     (editUser)="openDialog($event)"
   ></app-user-list>
+</div>
+<div class="user-table__footer">
+  <span>{{ filterService.currentTotalPage }}</span>
 </div>
 <modal-window [isOpen]="isModalOpen" (closed)="closeDialog()">
   <ng-template #modalContent></ng-template>

@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ICategory } from '../../model/product/category';
-import { AuthService } from '../user/auth.service';
+import { BasicFetchService } from '../helpers/basic-fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,7 @@ export class CategoryService {
   private baseUrl = environment.apiDineUrl;
 
   private _http = inject(HttpClient);
-  private _toastr = inject(ToastrService);
-  private _authService = inject(AuthService);
+  private _basicFetchService = inject(BasicFetchService);
 
   getAllCategories(id: number): Observable<ICategory[]> {
     return this._http.get<ICategory[]>(
@@ -29,74 +27,26 @@ export class CategoryService {
     return await response.json();
   }
 
-  async createCategory(category: ICategory): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}private/product/category`, {
-        method: 'POST',
-        headers: await this._authService.getAuthHeaderAsync(),
-        body: JSON.stringify(category),
-      });
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Category successfully created');
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        this._toastr.error(error.message, 'Permission denied');
-      }
-      return false;
-    }
+  async createCategory(category: ICategory): Promise<ICategory | null> {
+    return this._basicFetchService.create<ICategory>(
+      category,
+      `${this.baseUrl}private/product/category`,
+      'You haven`t permission'
+    );
   }
 
   async deleteCategory(id: number): Promise<boolean> {
-    try {
-      const response = await fetch(
-        `${this.baseUrl}private/product/category/${id}`,
-        {
-          method: 'DELETE',
-          headers: await this._authService.getAuthHeaderAsync(),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Category successfully deleted');
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        this._toastr.error(error.message, 'Permission denied');
-      }
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this.baseUrl}private/product/category/${id}`,
+      'You haven`t permission'
+    );
   }
 
-  async updateCategory(category: ICategory): Promise<boolean> {
-    try {
-      const response = await fetch(
-        `${this.baseUrl}private/product/category/${category.id}`,
-        {
-          method: 'PUT',
-          headers: await this._authService.getAuthHeaderAsync(),
-          body: JSON.stringify(category),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Category successfully updated');
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        this._toastr.error(error.message, 'Permission denied');
-      }
-      return false;
-    }
+  async updateCategory(category: ICategory): Promise<ICategory | null> {
+    return this._basicFetchService.update<ICategory>(
+      category,
+      `${this.baseUrl}private/product/category`,
+      'You haven`t permission'
+    );
   }
 }

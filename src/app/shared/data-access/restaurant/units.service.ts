@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUnit } from '../../model/product/unit';
-import { AuthService } from '../user/auth.service';
+import { BasicFetchService } from '../helpers/basic-fetch.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,7 @@ export class UnitsService {
   private baseUrl = environment.apiDineUrl;
 
   private _http = inject(HttpClient);
-  private _toastr = inject(ToastrService);
-  private _authService = inject(AuthService);
+  private _basicFetchService = inject(BasicFetchService);
 
   getAllUnits(): Observable<IUnit[]> {
     return this._http.get<IUnit[]>(
@@ -29,67 +27,23 @@ export class UnitsService {
     return await response.json();
   }
 
-  async createUnit(unit: IUnit): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}public/measurement/unit`, {
-        method: 'POST',
-        body: JSON.stringify(unit),
-        headers: await this._authService.getAuthHeaderAsync(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Unit successfully created');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+  async createUnit(unit: IUnit): Promise<IUnit | null> {
+    return this._basicFetchService.create<IUnit>(
+      unit,
+      `${this.baseUrl}public/measurement/unit`
+    );
   }
 
   async deleteUnit(id: number): Promise<boolean> {
-    try {
-      const response = await fetch(
-        `${this.baseUrl}public/measurement/unit/${id}`,
-        {
-          method: 'DELETE',
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Unit successfully deleted');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this.baseUrl}public/measurement/unit/${id}`
+    );
   }
 
-  async updateUnit(unit: IUnit): Promise<boolean> {
-    try {
-      const response = await fetch(
-        `${this.baseUrl}public/measurement/unit/${unit.id}`,
-        {
-          method: 'PUT',
-          body: JSON.stringify(unit),
-          headers: await this._authService.getAuthHeaderAsync(),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Unknown error occurred');
-      }
-
-      this._toastr.success('Unit successfully updated');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Error');
-      return false;
-    }
+  async updateUnit(unit: IUnit): Promise<IUnit | null> {
+    return this._basicFetchService.update<IUnit>(
+      unit,
+      `${this.baseUrl}public/measurement/unit/${unit.id}`
+    );
   }
 }

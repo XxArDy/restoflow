@@ -28,19 +28,28 @@ import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
     },
   ],
   imports: [CommonModule, ReactiveFormsModule],
-  template: `<div class="form__group">
-      <label for="address" class="form__label">Address</label>
-      <input
-        type="text"
-        id="address"
-        formControlName="address"
-        class="form__input"
-      />
+  template: `
+    <div class="form__group-line">
+      <div class="form__group">
+        <label for="address" class="form__label">Address</label>
+        <input
+          type="text"
+          id="address"
+          formControlName="address"
+          class="form__input"
+        />
+      </div>
+      <div class="form__group">
+        <label for="name" class="form__label">Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form__input"
+        />
+      </div>
     </div>
-    <div class="form__group">
-      <label for="name" class="form__label">Name</label>
-      <input type="text" id="name" formControlName="name" class="form__input" />
-    </div>`,
+  `,
 })
 export class RestaurantFormComponent implements OnInit, OnDestroy, OnChanges {
   restaurant = input<IRestaurant | null>({

@@ -6,6 +6,7 @@ import { IRestaurantImage } from 'src/app/shared/model/restaurant/restaurant-ima
 import { IPageTableDto } from 'src/app/shared/model/table/page-table-dto';
 import { ITable } from 'src/app/shared/model/table/table';
 import { environment } from 'src/environments/environment';
+import { BasicFetchService } from '../helpers/basic-fetch.service';
 import { AuthService } from '../user/auth.service';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class TableService {
   private _http = inject(HttpClient);
   private _authService = inject(AuthService);
   private _toastr = inject(ToastrService);
+  private _basicFetchService = inject(BasicFetchService);
 
   getAllTablesByRestaurantId(
     restaurantId: number,
@@ -38,63 +40,26 @@ export class TableService {
   }
 
   async deleteTable(tableId: string | undefined): Promise<boolean> {
-    if (tableId === undefined) return false;
-    try {
-      const response = await fetch(`${this.baseUrl}private/table/${tableId}`, {
-        method: 'DELETE',
-        headers: await this._authService.getAuthHeaderAsync(),
-      });
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Table successfully deleted');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Permission denied');
-      return false;
-    }
+    return this._basicFetchService.delete(
+      `${this.baseUrl}private/table/${tableId}`,
+      'You haven`t permission'
+    );
   }
 
-  async createTable(table: ITable[]): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}private/table`, {
-        method: 'POST',
-        body: JSON.stringify(table),
-        headers: await this._authService.getAuthHeaderAsync(),
-      });
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Tables successfully created');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Permission denied');
-      return false;
-    }
+  async createTable(table: ITable[]): Promise<ITable[] | null> {
+    return this._basicFetchService.create<ITable[]>(
+      table,
+      `${this.baseUrl}private/table`,
+      'You haven`t permission'
+    );
   }
 
-  async updateTable(tableId: string, table: ITable): Promise<boolean> {
-    try {
-      const response = await fetch(`${this.baseUrl}private/table/${tableId}`, {
-        method: 'PUT',
-        headers: await this._authService.getAuthHeaderAsync(),
-        body: JSON.stringify(table),
-      });
-
-      if (!response.ok) {
-        throw new Error('You haven`t permission');
-      }
-
-      this._toastr.success('Table successfully updated');
-      return true;
-    } catch (error: Error | any) {
-      this._toastr.error(error.message, 'Permission denied');
-      return false;
-    }
+  async updateTable(tableId: string, table: ITable): Promise<ITable | null> {
+    return this._basicFetchService.update<ITable>(
+      table,
+      `${this.baseUrl}private/table/${tableId}`,
+      'You haven`t permission'
+    );
   }
 
   getTableImage(id: string): Observable<IRestaurantImage> {

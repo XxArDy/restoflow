@@ -11,7 +11,7 @@
   --border-radius-small: 5px;
   --border-radius-large: 40px;
 
-  --shadow: 0 5px 0 0 var(--color-secondary);
+  --shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   --font-family-base: "DM Sans", sans-serif;
 
@@ -57,3 +57,5 @@ $input-height: var(--input-height);
 $button-height: var(--button-height);
 
 $opacity: var(--opacity);
+
+$shadow: var(--shadow);

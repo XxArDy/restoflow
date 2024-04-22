@@ -1,22 +1,13 @@
 <div class="table-page">
   <div class="table-list">
     <div class="table-list__buttons">
-      <select
+      <select-restaurant
         *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
-        class="select-primary"
-        name="restaurants"
-        id="restaurants"
-        (change)="onRestaurantChange($event)"
-      >
-        <option disabled selected value="">Choose restaurant</option>
-        <option
-          *ngFor="let restaurant of tableMenuService.restaurantList$ | async"
-          [value]="restaurant.id"
-          [selected]="restaurant.id == tableMenuService.selectedRestaurantId"
-        >
-          {{ restaurant.name }}
-        </option>
-      </select>
+        [restaurantList$]="tableMenuService.restaurantList$"
+        [selectedRestaurantId]="tableMenuService.selectedRestaurantId"
+        (changeRestaurant)="onRestaurantChange($event)"
+      ></select-restaurant>
+      <search-primary [filterService]="filterService"></search-primary>
       @if(authService.isItUserRestaurant(tableMenuService.selectedRestaurantId)){
       <button-primary
         name="Create tables"
@@ -26,7 +17,7 @@
     </div>
     @if(tableMenuService.selectedRestaurantId !== -1){
     <div class="table-list__inner">
-      @for (table of tableMenuService.tableList$ | async; track $index) {
+      @for (table of tableList$ | async; track $index) {
       <app-table-item
         [table]="table"
         (deleteTable)="tableMenuService.updateTable()"
@@ -40,12 +31,12 @@
       <div class="table-list__pagination">
         <i
           class="material-symbols-outlined unselectable"
-          (click)="tableMenuService.pageNumber = -1"
+          (click)="filterService.changePage(-1)"
           >chevron_left</i
         >
         <i
           class="material-symbols-outlined unselectable"
-          (click)="tableMenuService.pageNumber = 1"
+          (click)="filterService.changePage(1)"
           >chevron_right</i
         >
       </div>
@@ -78,6 +69,8 @@
       <app-table-order
         [tableId]="tableMenuService.selectedTable | async"
       ></app-table-order>
+      } @else {
+      <app-table-reservation></app-table-reservation>
       }
     </div>
   </div>

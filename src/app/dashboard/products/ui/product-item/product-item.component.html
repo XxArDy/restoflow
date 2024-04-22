@@ -1,0 +1,39 @@
+<div class="product-item">
+  <div class="product-item__carousel">
+    <ngx-slick-carousel
+      class="carousel"
+      #slickModal="slick-carousel"
+      [config]="slideConfig"
+    >
+      @for (slide of product()?.imageDto; track $index) {
+      <div ngxSlickItem class="slide">
+        <img class="slide__image" [src]="slide.url" [alt]="slide.fileName" />
+      </div>
+      }
+    </ngx-slick-carousel>
+  </div>
+  <div class="product-item__body">
+    <div class="product-item__info">
+      <span class="product-item__info-name">{{
+        product()?.productDto?.name
+      }}</span>
+      <span class="product-item__info-price">{{
+        product()?.productDto?.price | currency
+      }}</span>
+    </div>
+    @if(!authService.checkPermission([ROLES_CONFIG.superAdmin]) &&
+    authService.isItUserRestaurant(product()?.productDto?.restaurantId ?? 0)){
+    <div class="product-item__actions">
+      <button-edit
+        (click)="edit.emit(product()?.productDto?.id ?? 0)"
+      ></button-edit>
+      <conversation-bonus
+        #conversationBonus
+        [product]="product()?.productDto"
+        (clickOut)="conversationBonus.cancel()"
+      ></conversation-bonus>
+      <button-delete (click)="onDeleteProduct()"></button-delete>
+    </div>
+    }
+  </div>
+</div>

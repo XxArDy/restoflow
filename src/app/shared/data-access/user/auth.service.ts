@@ -104,7 +104,7 @@ export class AuthService {
     }
 
     const authTokenDto: AuthTokenDto = await response.json();
-    this.storeTokens(authTokenDto);
+    await this.storeTokens(authTokenDto);
     return authTokenDto;
   }
 
@@ -117,6 +117,7 @@ export class AuthService {
   }
 
   public async getAuthHeaderAsync(): Promise<Headers> {
+    await this.refreshToken();
     return new Headers({
       Authorization: `Bearer ${this.getToken()}`,
       'Content-Type': 'application/json',
@@ -124,6 +125,7 @@ export class AuthService {
   }
 
   public checkPermission(requiredPermissions: string[]): boolean {
+    if (requiredPermissions.length === 0) return true;
     const userPermissions = this._currentUser()?.authorities?.map(
       (permission) => permission.toLowerCase()
     );
