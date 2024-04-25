@@ -1,0 +1,41 @@
+@import "/src/scss/index";
+
+.reservation {
+  &__header {
+    margin-top: 10px;
+    @include flex-center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__form {
+    position: relative;
+
+    input {
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      background-color: transparent;
+      border: $border;
+      border-radius: $border-radius;
+      height: $input-height;
+      padding: 10px 15px;
+      outline: none;
+      font-size: 16px;
+      min-height: $input-height;
+    }
+
+    mat-datepicker-toggle {
+      position: absolute;
+      right: 10px;
+      top: 2px;
+    }
+  }
+
+  &__body {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ITableReservation } from '../../model/table/table-reservation';
 import { ITableReservationDto } from '../../model/table/table-reservation-dto';
+import { ITableReservationFilter } from '../../model/table/table-reservation-filter';
 import { BasicFetchService } from '../helpers/basic-fetch.service';
 
 @Injectable({
@@ -17,26 +18,26 @@ export class ReservationService {
 
   getAllReservations(
     restaurantId: number,
-    reservationTime: Date,
+    reservationDate: Date,
     pageNumber: number = 0,
     pageSize: number = 9999
-  ): Observable<ITableReservation[]> {
+  ): Observable<ITableReservationDto[]> {
     let params = new HttpParams();
     params = params.append('filterBy.restaurantId', restaurantId);
     params = params.append(
-      'filterBy.reservationTime',
-      reservationTime.toISOString()
+      'filterBy.reservationDate',
+      reservationDate.toISOString().split('T')[0]
     );
     params = params.append('pagination.page', pageNumber);
     params = params.append('pagination.size', pageSize);
     return this._http
-      .get<ITableReservationDto>(`${this._baseUrl}public/reservation/all`, {
+      .get<ITableReservationFilter>(`${this._baseUrl}public/reservation/all`, {
         params,
       })
       .pipe(map((reservation) => reservation.content));
   }
 
-  async getReservationById(id: string): Promise<ITableReservation> {
+  async getReservationById(id: string): Promise<ITableReservationDto> {
     const response = await fetch(`${this._baseUrl}public/reservation/${id}`);
     return await response.json();
   }

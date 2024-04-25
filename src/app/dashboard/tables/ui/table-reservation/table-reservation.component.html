@@ -1,23 +1,35 @@
-<span>Date</span>
-<input
-  [min]="minDate"
-  [owlDateTimeTrigger]="fromDatePicker"
-  [owlDateTime]="fromDatePicker"
-  [value]="tableMenuService.selectedDate$ | async"
-/>
-<owl-date-time
-  [pickerType]="'calendar'"
-  [firstDayOfWeek]="1"
-  (dateSelected)="tableMenuService.onDataSelected($event)"
-  #fromDatePicker
-></owl-date-time>
+<div class="reservation">
+  <div class="reservation__header">
+    <div class="reservation__form">
+      <input
+        matInput
+        id="reservationDate"
+        [matDatepicker]="datePicker"
+        [min]="minDate"
+        [value]="tableMenuService.selectedDate"
+        (dateChange)="tableMenuService.selectedDate = $event.value"
+        readonly
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datePicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
+    </div>
 
-<span>Time</span>
-<input [owlDateTimeTrigger]="fromTimePicker" [owlDateTime]="fromTimePicker" />
-<owl-date-time
-  [pickerType]="'timer'"
-  [stepMinute]="30"
-  [startAt]="tableMenuService.currentTimer$ | async"
-  (beforePickerOpen)="tableMenuService.onTimerOpen()"
-  #fromTimePicker
-></owl-date-time>
+    <button-primary
+      name="Create reservation"
+      (click)="createReservation.emit()"
+    ></button-primary>
+  </div>
+  <div class="reservation__body">
+    @for (reservation of tableMenuService.reservationList$ | async; track
+    $index) {
+    <app-table-reservation-item
+      [reservation]="reservation"
+      (deleteReservation)="tableMenuService.updateReservation()"
+      (editReservation)="editReservation.emit($event)"
+    ></app-table-reservation-item>
+    }
+  </div>
+</div>

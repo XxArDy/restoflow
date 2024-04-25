@@ -1,4 +1,9 @@
-import { IFilterDto } from '../helpers/filter-dto';
+import { IRestaurant } from '../restaurant/restaurant';
+import { ITable } from './table';
 import { ITableReservation } from './table-reservation';
 
-export interface ITableReservationDto extends IFilterDto<ITableReservation> {}
+export interface ITableReservationDto {
+  reservationDto: ITableReservation;
+  tableDto: ITable;
+  restaurantDto: IRestaurant;
+}

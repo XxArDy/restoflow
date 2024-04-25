@@ -1,11 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 import {
-  OwlDateTimeModule,
-  OwlNativeDateTimeModule,
-} from '@danielmoncada/angular-datetime-picker';
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MAT_NATIVE_DATE_FORMATS,
+  MatNativeDateModule,
+  NativeDateAdapter,
+} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { ClickOutDirective } from './directives/click-out.directive';
@@ -20,6 +26,13 @@ import { ModalWindowComponent } from './ui/modal-window/modal-window.component';
 import { PaginationButtonsComponent } from './ui/pagination-buttons/pagination-buttons.component';
 import { SearchPrimaryComponent } from './ui/search-primary/search-primary.component';
 import { SelectRestaurantComponent } from './ui/select-restaurant/select-restaurant.component';
+
+@Injectable()
+class UkrainianDateAdapter extends NativeDateAdapter {
+  override getFirstDayOfWeek(): number {
+    return 1;
+  }
+}
 
 @NgModule({
   declarations: [
@@ -42,9 +55,10 @@ import { SelectRestaurantComponent } from './ui/select-restaurant/select-restaur
     RouterLink,
     RouterLinkActive,
     ReactiveFormsModule,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     SlickCarouselModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     SideBarComponent,
@@ -58,13 +72,20 @@ import { SelectRestaurantComponent } from './ui/select-restaurant/select-restaur
     ReactiveFormsModule,
     ClickToFocusDirective,
     DisableDirective,
-    OwlDateTimeModule,
-    OwlNativeDateTimeModule,
     SelectRestaurantComponent,
     SlickCarouselModule,
     ConfirmDialogComponent,
     SearchPrimaryComponent,
     AutoFocusDirective,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'uk-UA' },
+    // provideNativeDateAdapter(),
+    { provide: DateAdapter, useClass: UkrainianDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
   ],
 })
 export class SharedModule {}

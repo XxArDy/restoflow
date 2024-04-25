@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  inject,
-  input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   ControlContainer,
   FormControl,
@@ -15,8 +7,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RestaurantService } from 'src/app/shared/data-access/restaurant/restaurant.service';
 import { AuthService } from 'src/app/shared/data-access/user/auth.service';
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
+import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-location';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -49,14 +43,44 @@ import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
         />
       </div>
     </div>
+    <div class="form__group-line">
+      <div class="form__group">
+        <label for="latitude" class="form__label">Latitude</label>
+        <input
+          type="text"
+          id="latitude"
+          formControlName="latitude"
+          class="form__input"
+        />
+      </div>
+      <div class="form__group">
+        <label for="longitude" class="form__label">Longitude</label>
+        <input
+          type="text"
+          id="longitude"
+          formControlName="longitude"
+          class="form__input"
+        />
+      </div>
+    </div>
+    <button type="button" class="add-button" (click)="tryLoadLocation()">
+      Try load location
+    </button>
   `,
 })
-export class RestaurantFormComponent implements OnInit, OnDestroy, OnChanges {
-  restaurant = input<IRestaurant | null>({
+export class RestaurantFormComponent implements OnInit, OnDestroy {
+  @Input() set restaurantValue(value: IRestaurant | null) {
+    this.restaurant = value;
+    if (value) this._updateRestaurant();
+  }
+
+  restaurant: IRestaurant | null = {
     id: 0,
     address: '',
     name: '',
-  });
+    latitude: 0,
+    longitude: 0,
+  };
 
   get parentFormGroup() {
     return this.parentContainer.control as FormGroup;
@@ -65,26 +89,50 @@ export class RestaurantFormComponent implements OnInit, OnDestroy, OnChanges {
   parentContainer = inject(ControlContainer);
   authService = inject(AuthService);
 
+  private _restaurantService = inject(RestaurantService);
+
   ngOnInit() {
     this.parentFormGroup.addControl(
       'address',
-      new FormControl(this.restaurant()?.address, Validators.required)
+      new FormControl(this.restaurant?.address, Validators.required)
     );
     this.parentFormGroup.addControl(
       'name',
-      new FormControl(this.restaurant()?.name, Validators.required)
+      new FormControl(this.restaurant?.name, Validators.required)
+    );
+    this.parentFormGroup.addControl(
+      'latitude',
+      new FormControl(this.restaurant?.latitude, Validators.required)
+    );
+    this.parentFormGroup.addControl(
+      'longitude',
+      new FormControl(this.restaurant?.longitude, Validators.required)
     );
   }
 
   ngOnDestroy(): void {
     this.parentFormGroup.removeControl('address');
     this.parentFormGroup.removeControl('name');
+    this.parentFormGroup.removeControl('latitude');
+    this.parentFormGroup.removeControl('longitude');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['restaurant'] && !changes['restaurant'].firstChange) {
-      this.parentFormGroup.get('address')?.setValue(this.restaurant()?.address);
-      this.parentFormGroup.get('name')?.setValue(this.restaurant()?.name);
+  async tryLoadLocation(): Promise<void> {
+    const info: RestaurantLocation | null =
+      await this._restaurantService.getLocationInfo(
+        this.parentFormGroup.get('address')?.value
+      );
+
+    if (info) {
+      this.parentFormGroup.get('latitude')?.setValue(info[0].lat);
+      this.parentFormGroup.get('longitude')?.setValue(info[0].lon);
     }
+  }
+
+  private _updateRestaurant(): void {
+    this.parentFormGroup.get('address')?.setValue(this.restaurant?.address);
+    this.parentFormGroup.get('name')?.setValue(this.restaurant?.name);
+    this.parentFormGroup.get('latitude')?.setValue(this.restaurant?.latitude);
+    this.parentFormGroup.get('longitude')?.setValue(this.restaurant?.longitude);
   }
 }

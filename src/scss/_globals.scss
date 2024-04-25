@@ -84,6 +84,13 @@ h4,
   &__group {
     margin-bottom: 15px;
     max-width: 100%;
+    position: relative;
+
+    mat-datepicker-toggle {
+      position: absolute;
+      right: 10px;
+      top: 40%;
+    }
 
     @include desktop {
       margin-bottom: 10px;
@@ -129,10 +136,11 @@ h4,
   }
 
   &__title {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
+    font-size: 2em !important;
 
     @include desktop {
-      font-size: 1.5em;
+      font-size: 1.5em !important;
     }
   }
 

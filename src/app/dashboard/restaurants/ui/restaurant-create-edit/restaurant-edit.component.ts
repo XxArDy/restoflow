@@ -21,7 +21,7 @@ import { RestaurantFormComponent } from './restaurant-form.component';
   template: `<div class="form-container">
     <h1 class="form__title">Edit restaurant</h1>
     <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()" class="form">
-      <app-restaurant-form [restaurant]="restaurant"></app-restaurant-form>
+      <app-restaurant-form [restaurantValue]="restaurant"></app-restaurant-form>
 
       <div class="form__btn">
         <button type="submit" class="form__submit">Submit</button>

@@ -5,15 +5,18 @@ import { Component } from '@angular/core';
   template: `<a class="material-symbols-outlined unselectable"> edit </a>`,
   styles: `
   @import '/src/scss/index';
-  a {
+  :host {
       border: $border;
       border-radius: $border-radius;
       font-size: 24px;
       padding: 10px;
       cursor: pointer;
+      @include flex-center;
 
-      @include hover {
-        color: $edit;
+      a {
+        @include hover {
+          color: $edit;
+        }
       }
     }`,
 })

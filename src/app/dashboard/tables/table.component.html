@@ -70,7 +70,11 @@
         [tableId]="tableMenuService.selectedTable | async"
       ></app-table-order>
       } @else {
-      <app-table-reservation></app-table-reservation>
+      <app-table-reservation
+        (createReservation)="onOpenModal('reservation.create')"
+        (editReservation)="onOpenModal('reservation.edit', $event)"
+      >
+      </app-table-reservation>
       }
     </div>
   </div>

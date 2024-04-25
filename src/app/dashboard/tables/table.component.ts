@@ -59,7 +59,7 @@ export class TableComponent implements OnInit {
     this.tableMenuService.selectedRestaurantId = target;
   }
 
-  onOpenModal(name: string, id: string = ''): void {
+  onOpenModal(name: string, id: string | number = ''): void {
     this.tableMenuService.openModal(name, id, this.modalContent);
   }
 }

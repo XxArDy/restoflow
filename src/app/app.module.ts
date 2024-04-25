@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import localeUk from '@angular/common/locales/uk';
 import {
   BrowserAnimationsModule,
   provideAnimations,
@@ -14,9 +16,21 @@ import { AppComponent } from './app.component';
 import { ErrorInterceptor } from './shared/data-access/helpers/error.interceptor';
 import { SharedModule } from './shared/shared.module';
 
+registerLocaleData(localeUk);
+
 export function tokenGetter() {
   return localStorage.getItem('accessToken');
 }
+
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'LL LT',
+  fullPickerInput: 'LL LT',
+  datePickerInput: 'LL',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @NgModule({
   declarations: [AppComponent],

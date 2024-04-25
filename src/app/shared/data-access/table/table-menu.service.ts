@@ -9,10 +9,14 @@ import {
 import { TableCreateComponent } from 'src/app/dashboard/tables/ui/table-create-edit/table-create.component';
 import { TableEditComponent } from 'src/app/dashboard/tables/ui/table-create-edit/table-edit.component';
 import { TableOrderComponent } from 'src/app/dashboard/tables/ui/table-order/table-order.component';
+import { TableReservationCreateComponent } from 'src/app/dashboard/tables/ui/table-reservation-create-edit/table-reservation-create.component';
+import { TableReservationEditComponent } from 'src/app/dashboard/tables/ui/table-reservation-create-edit/table-reservation-edit.component';
+import { TableReservationComponent } from 'src/app/dashboard/tables/ui/table-reservation/table-reservation.component';
 import { RestaurantService } from 'src/app/shared/data-access/restaurant/restaurant.service';
 import { IRestaurant } from '../../model/restaurant/restaurant';
 import { ITable } from '../../model/table/table';
-import { ITableReservation } from '../../model/table/table-reservation';
+import { ITableReservationDto } from '../../model/table/table-reservation-dto';
+import { getCorrectDate, getCurrentDateInKiev } from '../helpers/func';
 import { ReservationService } from './reservation.service';
 import { TableService } from './table.service';
 
@@ -20,15 +24,14 @@ import { TableService } from './table.service';
 export class TableMenuService {
   restaurantList$: Observable<IRestaurant[]> | null = null;
   tableList$: Observable<ITable[]> | null = null;
-  reservationList$: Observable<ITableReservation[]> | null = null;
+  reservationList$: Observable<ITableReservationDto[]> | null = null;
 
   isModalOpen = false;
 
   private _selectedTableId = new BehaviorSubject<string | null>(null);
   private _selectedRestaurantId = new BehaviorSubject<number>(-1);
   private _currentPage: 'reservation' | 'orders' = 'reservation';
-  private _currentTimer = new BehaviorSubject<Date>(new Date());
-  private _selectedDate = new BehaviorSubject<Date>(new Date());
+  private _selectedDate = new BehaviorSubject<Date>(getCurrentDateInKiev());
 
   selectedTable = this._selectedTableId.asObservable();
 
@@ -57,18 +60,11 @@ export class TableMenuService {
   }
 
   set selectedDate(value: Date) {
-    this._selectedDate.next(value);
+    this._selectedDate.next(getCorrectDate(value));
   }
 
-  get selectedDate$() {
-    return this._selectedDate.asObservable();
-  }
   get selectedDate() {
     return this._selectedDate.getValue();
-  }
-
-  get currentTimer$() {
-    return this._currentTimer.asObservable();
   }
 
   private _restaurantService = inject(RestaurantService);
@@ -77,7 +73,7 @@ export class TableMenuService {
 
   public init(): void {
     this.restaurantList$ = this._restaurantService.getAllRestaurants();
-    this.reservationList$ = this._getAllReservation();
+    this.updateReservation();
     this.updateTable();
   }
 
@@ -87,7 +83,7 @@ export class TableMenuService {
 
   public async openModal(
     name: string,
-    id: string,
+    id: string | number,
     modalContent: ViewContainerRef
   ): Promise<void> {
     modalContent?.clear();
@@ -106,14 +102,62 @@ export class TableMenuService {
           this.updateTable();
           this.onCloseModal();
         });
-        editModal.setInput('table', await this._tableService.getTableById(id));
+        editModal.setInput(
+          'table',
+          await this._tableService.getTableById(id.toString())
+        );
         break;
       case 'orders':
         const orderModal = modalContent.createComponent(TableOrderComponent);
         orderModal.instance.tableId = this.selectedTableId;
         break;
       case 'reservation':
-        // TODO: create reservation component
+        const reservationModal = modalContent.createComponent(
+          TableReservationComponent
+        );
+        reservationModal.instance.createReservation.subscribe(() => {
+          this.onCloseModal();
+          this.openModal('reservation.create', '', modalContent);
+        });
+        reservationModal.instance.editReservation.subscribe((id: number) => {
+          this.onCloseModal();
+          this.openModal('reservation.edit', id, modalContent);
+        });
+        break;
+      case 'reservation.create':
+        const reservationCreateModal = modalContent.createComponent(
+          TableReservationCreateComponent
+        );
+        reservationCreateModal.instance.updateTableReservation.subscribe(() => {
+          this.updateReservation();
+          this.onCloseModal();
+        });
+        reservationCreateModal.setInput(
+          'selectedTableId',
+          this.selectedTableId
+        );
+        reservationCreateModal.setInput(
+          'restaurantId',
+          this.selectedRestaurantId
+        );
+        break;
+      case 'reservation.edit':
+        const reservationEditModal = modalContent.createComponent(
+          TableReservationEditComponent
+        );
+        reservationEditModal.instance.updateTableReservation.subscribe(() => {
+          this.updateReservation();
+          this.onCloseModal();
+        });
+        reservationEditModal.setInput(
+          'reservation',
+          await this._reservationService.getReservationById(id.toString())
+        );
+        reservationEditModal.setInput('selectedTableId', this.selectedTableId);
+        reservationEditModal.setInput(
+          'restaurantId',
+          this.selectedRestaurantId
+        );
         break;
     }
     this.isModalOpen = true;
@@ -123,23 +167,8 @@ export class TableMenuService {
     this.isModalOpen = false;
   }
 
-  public onTimerOpen(): void {
-    const date = new Date();
-    const minutes = date.getMinutes();
-    const hours = date.getHours();
-
-    const roundedMinutes = minutes >= 30 ? 60 : 30;
-    const roundedHours = roundedMinutes === 60 ? hours + 1 : hours;
-
-    date.setHours(roundedHours);
-    date.setMinutes(roundedMinutes % 60);
-    date.setSeconds(0);
-
-    this._currentTimer.next(date);
-  }
-
-  public onDataSelected(date: Date): void {
-    this._selectedDate.next(date);
+  public updateReservation(): void {
+    this.reservationList$ = this._getAllReservation();
   }
 
   private _getAllTable(): Observable<ITable[]> {
@@ -156,7 +185,7 @@ export class TableMenuService {
     );
   }
 
-  private _getAllReservation(): Observable<ITableReservation[]> {
+  private _getAllReservation(): Observable<ITableReservationDto[]> {
     return combineLatest([this._selectedRestaurantId, this._selectedDate]).pipe(
       switchMap(([selectedRestaurantId, selectedDate]) =>
         this._reservationService.getAllReservations(

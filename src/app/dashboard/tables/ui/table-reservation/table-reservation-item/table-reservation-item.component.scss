@@ -1,0 +1,36 @@
+@import "/src/scss/index";
+
+.card {
+  @include border;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+
+  @include desktop {
+    grid-template-columns: repeat(2, 1fr) auto;
+  }
+}
+
+.column {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5px;
+
+  span {
+    @include ellipse;
+    text-align: center;
+  }
+}
+
+.row {
+  @include flex-center;
+  gap: 5px;
+
+  //   button-edit,
+  //   button-delete {
+  //     width: 25px;
+  //     font-size: 10px;
+  //     padding: 5px;
+  //   }
+}

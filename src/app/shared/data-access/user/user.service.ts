@@ -58,7 +58,7 @@ export class UserService {
     );
   }
 
-  getFullName(user: IUserDto): string {
-    return `${user.firstName} ${user.lastName}`;
+  getFullName(user: IUserDto | null): string {
+    return `${user?.firstName} ${user?.lastName}`;
   }
 }

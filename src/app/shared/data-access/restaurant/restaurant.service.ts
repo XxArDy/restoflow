@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, ViewContainerRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { CategoryCreateComponent } from 'src/app/dashboard/restaurants/ui/category-create-edit/category-create.component';
 import { CategoryEditComponent } from 'src/app/dashboard/restaurants/ui/category-create-edit/category-edit.component';
@@ -8,6 +9,7 @@ import { UnitsCreateComponent } from 'src/app/dashboard/restaurants/ui/units-cre
 import { UnitsEditComponent } from 'src/app/dashboard/restaurants/ui/units-create-edit/units-edit.component';
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
 import { environment } from 'src/environments/environment';
+import { RestaurantLocation } from '../../model/restaurant/restaurant-location';
 import { IUserDto } from '../../model/user/user-dto';
 import { BasicFetchService } from '../helpers/basic-fetch.service';
 import { RestaurantsComponent } from './../../../dashboard/restaurants/restaurants.component';
@@ -28,6 +30,7 @@ export class RestaurantService {
   private _categoryService = inject(CategoryService);
   private _unitService = inject(UnitsService);
   private _basicFetchService = inject(BasicFetchService);
+  private _toastr = inject(ToastrService);
 
   getAllRestaurants(): Observable<IRestaurant[]> {
     return this._http
@@ -65,6 +68,32 @@ export class RestaurantService {
       restaurant,
       `${this.baseUrl}public/restaurant`
     );
+  }
+
+  async getLocationInfo(query: string): Promise<RestaurantLocation | null> {
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+      query
+    )}&format=json&polygon=1&addressdetails=1`;
+
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error('Can`t load location info');
+      }
+
+      const data: RestaurantLocation = await response.json();
+
+      if (data.length <= 0) {
+        throw new Error('Can`t load location info');
+      }
+
+      this._toastr.success('Successfully updated');
+      return data;
+    } catch (error: Error | any) {
+      this._toastr.error(error.message, 'Error');
+      return null;
+    }
   }
 
   getRestaurantName(user: IUserDto): string {
