@@ -16,14 +16,16 @@ export class OrderViewService {
   private _selectedRestaurantId$ = new BehaviorSubject<number>(-1);
   selectedTableList: ITable[] = [];
 
-  // selectedTableList$: Observable<ITable[]> = of(this._selectedTableList);
-
   set selectedRestaurantId(value: number) {
     this._onSelectedRestaurantIdChange(value);
   }
 
   get selectedRestaurantId$() {
     return this._selectedRestaurantId$.asObservable();
+  }
+
+  get selectedRestaurantId() {
+    return this._selectedRestaurantId$.getValue();
   }
 
   private _authService = inject(AuthService);

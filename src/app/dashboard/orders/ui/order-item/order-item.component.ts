@@ -4,11 +4,12 @@ import {
   input,
   OnChanges,
   OnInit,
+  output,
   SimpleChanges,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { WebSocketService } from 'src/app/shared/data-access/web-socket/web-socket.service';
 import { IOrderWs } from 'src/app/shared/model/order/order-ws';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -24,6 +25,7 @@ import { environment } from 'src/environments/environment';
 export class OrderItemComponent implements OnInit, OnChanges {
   tableId = input.required<string | undefined>();
   tableName = input<string>();
+  updateStatistic = output<void>();
 
   get statuses() {
     return environment.orderStatus;
@@ -59,9 +61,9 @@ export class OrderItemComponent implements OnInit, OnChanges {
 
   private _subscribeToOrder(): void {
     if (this.tableId()) {
-      this.orderData$ = this._webSocketService.subscribeToTable(
-        this.tableId()!
-      );
+      this.orderData$ = this._webSocketService
+        .subscribeToTable(this.tableId()!)
+        .pipe(tap(() => this.updateStatistic.emit()));
 
       this._webSocketService.removeOrder(this.tableId()!);
     }

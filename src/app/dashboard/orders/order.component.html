@@ -13,6 +13,7 @@
       <app-order-item
         [tableId]="item.id"
         [tableName]="item.name"
+        (updateStatistic)="onUpdateStatistic()"
       ></app-order-item>
       }
     </div>
@@ -36,7 +37,10 @@
     </div>
   </div>
   <div class="order__footer">
-    <div class="order__footer-statistic"></div>
+    <div class="order__footer-statistic">
+      <span>Total orders {{ totalOrders }}</span>
+      <span>Total products {{ totalProducts }}</span>
+    </div>
     <div class="order__footer-legend">
       <div class="order__footer-legend-item">
         <div class="box choosing"></div>
