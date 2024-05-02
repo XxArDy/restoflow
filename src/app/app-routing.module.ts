@@ -9,6 +9,7 @@ import { UserComponent } from './dashboard/users/user.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ROUTING_CONFIG } from './shared/configs/app-routing.config';
+import { roleGuard } from './shared/data-access/helpers/role.guard';
 import { AuthGuard } from './shared/data-access/user/auth.guard';
 import { UserResolver } from './shared/data-access/user/user.resolver';
 
@@ -27,6 +28,7 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    canActivateChild: [roleGuard],
     children: [
       {
         path: ROUTING_CONFIG.ordersUrl,
