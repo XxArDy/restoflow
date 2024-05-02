@@ -31,9 +31,8 @@
     }
 
     &-buttons {
-      button-edit {
-        margin: 0 10px;
-      }
+      display: flex;
+      gap: 10px;
     }
   }
 }

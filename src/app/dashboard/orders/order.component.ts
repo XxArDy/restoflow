@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit {
 
   onRestaurantChange(target: number): void {
     this.orderViewService.selectedRestaurantId = target;
+    this.onUpdateStatistic();
   }
 
   async onUpdateStatistic(): Promise<void> {

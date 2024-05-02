@@ -45,10 +45,14 @@
 
   &__functions {
     padding: 0 !important;
-    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0 0 10px !important;
 
-    button-edit {
-      margin: 0 10px;
+    @include desktop {
+      padding-right: 5px !important;
     }
   }
 

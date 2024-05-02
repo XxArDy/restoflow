@@ -37,9 +37,7 @@
     &-buttons {
       padding: 0 20px;
       @include flex(row, center, flex-end);
-      button-edit {
-        margin: 0 10px;
-      }
+      gap: 10px;
     }
   }
 }
