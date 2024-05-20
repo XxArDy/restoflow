@@ -9,7 +9,7 @@ import { ProductFormComponent } from './product-form.component';
 @Component({
   selector: 'app-product-edit',
   template: `<div class="form-container">
-    <h1 class="form__title">Edit product</h1>
+    <h1 class="form__title">{{ 'Products.Edit' | translate }}</h1>
     <form
       [formGroup]="productForm"
       (ngSubmit)="onSubmit()"
@@ -21,7 +21,9 @@ import { ProductFormComponent } from './product-form.component';
         [productValue]="product()"
       ></app-product-form>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div> `,

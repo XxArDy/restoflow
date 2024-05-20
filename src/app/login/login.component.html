@@ -27,7 +27,7 @@
     </g>
   </svg>
   <p class="unselectable">
-    Use the details provided you by your account administrator.
+    {{ "Login.Title" | translate }}
   </p>
   <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form__wrapper">
@@ -38,7 +38,9 @@
         autocomplete="username"
         required
       />
-      <label class="unselectable" for="username">Username</label>
+      <label class="unselectable" for="username">{{
+        "Login.Username" | translate
+      }}</label>
       <i class="material-icons unselectable">person</i>
     </div>
     <div class="form__wrapper">
@@ -49,7 +51,9 @@
         autocomplete="current-password"
         required
       />
-      <label class="unselectable" for="password">Password</label>
+      <label class="unselectable" for="password">{{
+        "Login.Password" | translate
+      }}</label>
       <div
         class="form__show-password unselectable"
         (click)="toggleShowPassword()"
@@ -60,7 +64,9 @@
       </div>
     </div>
     <div class="btn-center">
-      <button type="submit" [disabled]="loginForm.invalid">Sign in</button>
+      <button type="submit" [disabled]="loginForm.invalid">
+        {{ "Login.SignIn" | translate }}
+      </button>
     </div>
   </form>
 </div>

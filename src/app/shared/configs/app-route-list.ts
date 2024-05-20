@@ -10,25 +10,25 @@ export interface IRouteList {
 
 export const ROUTE_LIST: IRouteList[] = [
   {
-    name: 'orders',
+    name: 'Orders.Orders',
     icon: 'order_approve',
     url: `/${ROUTING_CONFIG.ordersUrl}`,
     permission: [],
   },
   {
-    name: 'users',
+    name: 'User.Users',
     icon: 'group',
     url: `/${ROUTING_CONFIG.usersUrl}`,
     permission: [ROLES_CONFIG.superAdmin, ROLES_CONFIG.admin],
   },
   {
-    name: 'restaurants',
+    name: 'Restaurants.Restaurant',
     icon: 'restaurant',
     url: `/${ROUTING_CONFIG.restaurantsUrl}`,
     permission: [ROLES_CONFIG.superAdmin, ROLES_CONFIG.admin],
   },
   {
-    name: 'tables',
+    name: 'Tables.Tables',
     icon: 'table_restaurant',
     url: `/${ROUTING_CONFIG.tablesUrl}`,
     permission: [
@@ -39,8 +39,8 @@ export const ROUTE_LIST: IRouteList[] = [
     ],
   },
   {
-    name: 'product',
-    icon: 'nutrition ',
+    name: 'Products.Products',
+    icon: 'nutrition',
     url: `/${ROUTING_CONFIG.productsUrl}`,
     permission: [
       ROLES_CONFIG.superAdmin,
@@ -49,7 +49,7 @@ export const ROUTE_LIST: IRouteList[] = [
     ],
   },
   {
-    name: 'statistics',
+    name: 'Statistics.Statistics',
     icon: 'monitoring',
     url: `/${ROUTING_CONFIG.statisticsUrl}`,
     permission: [

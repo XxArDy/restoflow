@@ -1,0 +1,136 @@
+{
+  "User": {
+    "Email": "Email",
+    "Username": "Username",
+    "FullName": "Full name",
+    "RestaurantName": "Restaurant name",
+    "BonusScore": "Bonus score",
+    "Deleted": "Deleted",
+    "Functions": "Functions",
+    "Edit": "Edit user",
+    "Delete": "Delete",
+    "Deactivated": "Deactivated",
+    "Activated": "Activated",
+    "Empty": "User list is empty",
+    "Create": "Create user",
+    "Role": "Role",
+    "Password": "Password",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "WithoutRestaurant": "Without restaurant",
+    "User": "User",
+    "Users": "Users"
+  },
+  "Orders": {
+    "TotalOrders": "Total orders",
+    "TotalProducts": "Total products",
+    "Choosing": "Choosing",
+    "Ordered": "Ordered",
+    "Cooking": "Cooking",
+    "Ready": "Ready",
+    "Name": "Name",
+    "Quantity": "Quantity",
+    "Order": "Order",
+    "Orders": "Orders",
+    "Item": "Item",
+    "Items": "Items"
+  },
+  "Products": {
+    "Product": "Product",
+    "Products": "Products",
+    "Edit": "Edit product",
+    "Create": "Create product",
+    "Name": "Name",
+    "Category": "Category",
+    "Description": "Description",
+    "BonusPoint": "Bonus point",
+    "Price": "Price",
+    "Quantity": "Quantity",
+    "MeasurementUnit": "Measurement unit",
+    "CookingTime": "Cooking time (minutes)",
+    "Ingredients": "Ingredients",
+    "Images": "Images",
+    "IngredientsPlaceholder": "Please enter ingredients, separated by commas"
+  },
+  "Tables": {
+    "Tables": "Tables",
+    "Table": "Table",
+    "Empty": "Restaurant have`nt table",
+    "Create": "Create table",
+    "Edit": "Edit table",
+    "Name": "Name",
+    "SeatsCount": "Seats count",
+    "Status": "Status",
+    "Download": "Download",
+    "Delete": "Delete",
+    "Select": "Select"
+  },
+  "Reservations": {
+    "Reservation": "Reservation",
+    "Reservations": "Reservations",
+    "SelectTable": "Select the table",
+    "SelectUser": "Select the user",
+    "Date": "Date",
+    "Time": "Time",
+    "ValueRange": "Value must be between {{ minTime }} and {{ maxTime }}.",
+    "Create": "Create reservation",
+    "Edit": "Edit reservation"
+  },
+  "Restaurants": {
+    "Restaurant": "Restaurant",
+    "Restaurants": "Restaurants",
+    "Create": "Create restaurant",
+    "Edit": "Edit restaurant",
+    "Address": "Address",
+    "Name": "Name",
+    "Latitude": "Latitude",
+    "Longitude": "Longitude",
+    "TryLoadLocation": "Try load location"
+  },
+  "Units": {
+    "Units": "Units",
+    "Unit": "Unit",
+    "Create": "Create unit",
+    "Edit": "Edit unit",
+    "Abbreviation": "Abbreviation",
+    "Name": "Name"
+  },
+  "Categories": {
+    "Category": "Category",
+    "Categories": "Categories",
+    "Create": "Create category",
+    "Edit": "Edit category",
+    "Name": "Name"
+  },
+  "Filter": {
+    "Current-Total-page": "{{currentPage}} of {{totalPages}}",
+    "Search": "Search",
+    "ChooseRestaurant": "Choose restaurant"
+  },
+  "Form": {
+    "Submit": "Submit",
+    "Logout": "Logout",
+    "Delete": "Delete",
+    "Confirmation": "Confirmation",
+    "Yes": "Yes",
+    "No": "No",
+    "Add": "Add",
+    "Remove": "Remove",
+    "ConfirmationMessage": "Are you sure you want to delete?"
+  },
+  "NotFound": {
+    "Title": "Oops! Page Not Be Found",
+    "Message": "Sorry but the page you are looking for does not exist, have been removed. name changed or is temporarily unavailable",
+    "Back": "Back to homepage"
+  },
+  "Login": {
+    "Title": "Use the details provided you by your account administrator.",
+    "Username": "Username",
+    "Password": "Password",
+    "SignIn": "Sign in"
+  },
+  "Statistics": {
+    "Statistics": "Statistics",
+    "Statistic": "Statistic"
+  }
+}

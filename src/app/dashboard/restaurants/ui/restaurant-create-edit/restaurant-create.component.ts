@@ -10,11 +10,13 @@ import { RestaurantFormComponent } from './restaurant-form.component';
   standalone: true,
   imports: [SharedModule, RestaurantFormComponent],
   template: `<div class="form-container">
-    <h1 class="form__title">Create restaurant</h1>
+    <h1 class="form__title">{{ 'Restaurants.Create' | translate }}</h1>
     <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()" class="form">
       <app-restaurant-form></app-restaurant-form>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div> `,

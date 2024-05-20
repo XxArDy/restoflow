@@ -9,11 +9,11 @@
           <img [src]="item.productImage" alt="Product Image" />
         </div>
         <div class="order__body-card-title">
-          <span>Name</span>
+          <span>{{ "Orders.Name" | translate }}</span>
           <span>{{ item.productName }}</span>
         </div>
         <div class="order__body-card-quantity">
-          <span>Quantity</span>
+          <span>{{ "Orders.Quantity" | translate }}</span>
           <span>{{ item.quantity }}</span>
         </div>
       </div>

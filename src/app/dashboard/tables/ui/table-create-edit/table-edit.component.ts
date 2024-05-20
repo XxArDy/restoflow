@@ -7,6 +7,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TableService } from 'src/app/shared/data-access/table/table.service';
 import { ITable } from 'src/app/shared/model/table/table';
 import { TableFormComponent } from './table-form.component';
@@ -14,7 +15,7 @@ import { TableFormComponent } from './table-form.component';
 @Component({
   selector: 'app-table-edit',
   template: ` <div class="form-container">
-    <h1 class="form__title">Edit table</h1>
+    <h1 class="form__title">{{ 'Tables.Edit' | translate }}</h1>
     <form [formGroup]="tableForms" (ngSubmit)="onSubmit()" class="form">
       <div formArrayName="tables">
         <div
@@ -26,12 +27,19 @@ import { TableFormComponent } from './table-form.component';
       </div>
 
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div>`,
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, TableFormComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    TableFormComponent,
+    TranslateModule,
+  ],
 })
 export class TableEditComponent {
   @Input() set table(value: ITable) {

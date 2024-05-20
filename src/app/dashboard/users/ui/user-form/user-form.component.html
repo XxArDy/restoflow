@@ -1,5 +1,5 @@
 <div class="form__group">
-  <label for="role" class="form__label">Role</label>
+  <label for="role" class="form__label">{{ "User.Role" | translate }}</label>
   <div class="form__checkboxes">
     <div *ngFor="let role of roles() | async" class="form__checkbox">
       <mat-slide-toggle
@@ -13,7 +13,9 @@
 </div>
 <div class="form__group-line">
   <div class="form__group">
-    <label for="username" class="form__label">Username</label>
+    <label for="username" class="form__label">{{
+      "User.Username" | translate
+    }}</label>
     <input
       type="text"
       id="username"
@@ -23,7 +25,9 @@
     />
   </div>
   <div class="form__group">
-    <label for="email" class="form__label">Email</label>
+    <label for="email" class="form__label">{{
+      "User.Email" | translate
+    }}</label>
     <input
       type="email"
       id="email"
@@ -35,7 +39,9 @@
 </div>
 <div class="form__group-line">
   <div class="form__group">
-    <label for="firstName" class="form__label">First Name</label>
+    <label for="firstName" class="form__label">{{
+      "User.FirstName" | translate
+    }}</label>
     <input
       type="text"
       id="firstName"
@@ -45,7 +51,9 @@
     />
   </div>
   <div class="form__group">
-    <label for="lastName" class="form__label">Last Name</label>
+    <label for="lastName" class="form__label">{{
+      "User.LastName" | translate
+    }}</label>
     <input
       type="text"
       id="lastName"
@@ -56,9 +64,13 @@
   </div>
 </div>
 <div class="form__group">
-  <label for="restaurantId" class="form__label">Restaurant</label>
+  <label for="restaurantId" class="form__label">{{
+    "User.RestaurantName" | translate
+  }}</label>
   <select id="restaurantId" formControlName="restaurantId" class="form__select">
-    <option [value]="null" selected>Without restaurant</option>
+    <option [value]="null" selected>
+      {{ "User.WithoutRestaurant" | translate }}
+    </option>
     <option
       *ngFor="let restaurant of restaurants()"
       [value]="restaurant.id"
@@ -70,7 +82,9 @@
 </div>
 <div class="form__group-line">
   <div class="form__group">
-    <label for="bonusScore" class="form__label">Bonus Score</label>
+    <label for="bonusScore" class="form__label">{{
+      "User.BonusScore" | translate
+    }}</label>
     <input
       type="number"
       id="bonusScore"
@@ -79,7 +93,9 @@
     />
   </div>
   <div class="form__group">
-    <label for="password" class="form__label">Password</label>
+    <label for="password" class="form__label">{{
+      "User.Password" | translate
+    }}</label>
     <input
       type="password"
       id="password"

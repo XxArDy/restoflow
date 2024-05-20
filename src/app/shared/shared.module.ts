@@ -12,6 +12,7 @@ import {
 } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { ClickOutDirective } from './directives/click-out.directive';
@@ -59,6 +60,7 @@ class UkrainianDateAdapter extends NativeDateAdapter {
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TranslateModule,
   ],
   exports: [
     SideBarComponent,
@@ -80,6 +82,7 @@ class UkrainianDateAdapter extends NativeDateAdapter {
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    TranslateModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'uk-UA' },

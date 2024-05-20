@@ -12,7 +12,7 @@ import { TableReservationFormComponent } from './table-reservation-form.componen
   standalone: true,
   imports: [SharedModule, TableReservationFormComponent],
   template: `<div class="form-container">
-    <h1 class="form__title">Edit reservation</h1>
+    <h1 class="form__title">{{ 'Reservations.Edit' | translate }}</h1>
     <form
       [formGroup]="tableReservationForms"
       (ngSubmit)="onSubmit()"
@@ -24,7 +24,9 @@ import { TableReservationFormComponent } from './table-reservation-form.componen
         [restaurantId]="restaurantId()"
       ></app-table-reservation-form>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div>`,

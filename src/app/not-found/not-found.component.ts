@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-not-found',
@@ -10,16 +11,13 @@ import { RouterModule } from '@angular/router';
         <div class="notfound-404">
           <h1>4<span></span>4</h1>
         </div>
-        <h2>Oops! Page Not Be Found</h2>
-        <p>
-          Sorry but the page you are looking for does not exist, have been
-          removed. name changed or is temporarily unavailable
-        </p>
-        <a [routerLink]="['/']">Back to homepage</a>
+        <h2>{{ 'NotFound.Title' | translate }}</h2>
+        <p>{{ 'NotFound.Message' | translate }}</p>
+        <a [routerLink]="['/']">{{ 'NotFound.Back' | translate }}</a>
       </div>
     </div>
   `,
   styleUrls: ['./not-found.component.scss'],
-  imports: [RouterModule],
+  imports: [RouterModule, TranslateModule],
 })
 export class NotFoundComponent {}

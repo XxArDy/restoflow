@@ -20,7 +20,8 @@
           class="aside__button button-logout unselectable"
           (click)="logout()"
         >
-          <i class="material-symbols-outlined">logout</i>Logout
+          <i class="material-symbols-outlined">logout</i
+          >{{ "Form.Logout" | translate }}
         </button>
       </div>
     </div>
@@ -75,7 +76,7 @@
   >
     <li class="aside__menu-item">
       <i class="material-symbols-outlined">{{ item.icon }}</i
-      >{{ item.name }}
+      >{{ item.name | translate | uppercase }}
     </li>
   </a>
 </ng-template>
@@ -88,7 +89,7 @@
   >
     <li class="mobile-overlay__item">
       <i class="material-symbols-outlined">{{ item.icon }}</i
-      >{{ item.name }}
+      >{{ item.name | translate | uppercase }}
     </li>
   </a>
 </ng-template>

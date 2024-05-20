@@ -12,19 +12,22 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { UnitsService } from 'src/app/shared/data-access/restaurant/units.service';
 import { IUnit } from 'src/app/shared/model/product/unit';
 
 @Component({
   selector: 'app-units-edit',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TranslateModule],
   template: `<div class="form-container">
-    <h1 class="form__title">Edit unit</h1>
+    <h1 class="form__title">{{ 'Units.Edit' | translate }}</h1>
     <form [formGroup]="unitForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form__group-line">
         <div class="form__group">
-          <label for="name" class="form__label">Name</label>
+          <label for="name" class="form__label">{{
+            'Units.Name' | translate
+          }}</label>
           <input
             type="text"
             id="name"
@@ -33,7 +36,9 @@ import { IUnit } from 'src/app/shared/model/product/unit';
           />
         </div>
         <div class="form__group">
-          <label for="name" class="form__label">Abbreviation</label>
+          <label for="name" class="form__label">{{
+            'Units.Abbreviation' | translate
+          }}</label>
           <input
             type="text"
             id="name"
@@ -43,7 +48,9 @@ import { IUnit } from 'src/app/shared/model/product/unit';
         </div>
       </div>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div> `,

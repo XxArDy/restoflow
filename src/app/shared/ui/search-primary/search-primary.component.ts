@@ -9,7 +9,7 @@ import { FilterService } from '../../data-access/helpers/filter.service';
       #searchInput
       id="searchInput"
       type="text"
-      placeholder="Search"
+      [placeholder]="'Filter.Search' | translate"
       (input)="updateQuery(searchInput.value)"
     />
   </div>`,

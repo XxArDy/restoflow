@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'button-primary',
-  template: `<span class="unselectable">{{ name() }}</span>`,
+  template: `<span class="unselectable">{{ name() | translate }}</span>`,
   styles: `
   @import '/src/scss/index';
 

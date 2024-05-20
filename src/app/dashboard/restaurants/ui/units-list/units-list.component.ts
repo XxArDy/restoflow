@@ -16,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   selector: 'app-units-list',
   template: `<div class="unit-list__header">
       <button-primary
-        name="Create unit"
+        name="Units.Create"
         (click)="createUnit.emit()"
       ></button-primary>
       <pagination-buttons

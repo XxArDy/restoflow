@@ -10,7 +10,9 @@ import { IRestaurant } from '../../model/restaurant/restaurant';
     id="restaurants"
     (change)="onRestaurantChange($event)"
   >
-    <option disabled selected value="-1">Choose restaurant</option>
+    <option disabled selected value="-1">
+      {{ 'Filter.ChooseRestaurant' | translate }}
+    </option>
     <option
       *ngFor="let restaurant of restaurantList$() | async"
       [value]="restaurant.id"

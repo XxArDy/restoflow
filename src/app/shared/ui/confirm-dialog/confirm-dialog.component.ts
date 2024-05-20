@@ -9,13 +9,17 @@ export interface DialogData {
   selector: 'app-confirm-dialog',
   template: `
     <div class="mat-dialog-container" mat-dialog-content>
-      <h1 mat-dialog-title>Confirmation</h1>
+      <h1 mat-dialog-title>{{ 'Form.Confirmation' | translate }}</h1>
       <div class="mat-dialog-content" mat-dialog-content>
-        <p>{{ data.message }}</p>
+        <p>{{ data.message | translate }}</p>
       </div>
       <div class="mat-dialog-actions" mat-dialog-actions>
-        <button mat-button cdkFocusInitial (click)="onNoClick()">No</button>
-        <button mat-button (click)="onYesClick()">Yes</button>
+        <button mat-button cdkFocusInitial (click)="onNoClick()">
+          {{ 'Form.No' | translate }}
+        </button>
+        <button mat-button (click)="onYesClick()">
+          {{ 'Form.Yes' | translate }}
+        </button>
       </div>
     </div>
   `,

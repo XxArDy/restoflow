@@ -42,7 +42,7 @@ export class BasicFetchService {
   ): Promise<boolean> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Are you sure you want to delete?',
+        message: 'Form.ConfirmationMessage',
       },
     });
 

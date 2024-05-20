@@ -7,5 +7,5 @@ export interface IOrder {
   restaurantId: number;
   done: boolean;
   status: string;
-  createdDate?: string;
+  createdDate?: Date;
 }

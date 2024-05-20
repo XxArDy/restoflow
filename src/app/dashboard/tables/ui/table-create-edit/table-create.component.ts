@@ -7,6 +7,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TableMenuService } from 'src/app/shared/data-access/table/table-menu.service';
 import { TableService } from 'src/app/shared/data-access/table/table.service';
 import { ITable } from 'src/app/shared/model/table/table';
@@ -16,7 +17,7 @@ import { TableFormComponent } from './table-form.component';
 @Component({
   selector: 'app-table-create',
   template: ` <div class="form-container">
-    <h1 class="form__title">Create tables</h1>
+    <h1 class="form__title">{{ 'Tables.Create' | translate }}</h1>
     <form [formGroup]="tableForms" (ngSubmit)="onSubmit()" class="form">
       <div formArrayName="tables">
         <div
@@ -31,14 +32,21 @@ import { TableFormComponent } from './table-form.component';
       </div>
       <div class="form__btn">
         <button class="add-button" type="button" (click)="addForm()">
-          Add
+          {{ 'Form.Add' | translate }}
         </button>
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div>`,
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, TableFormComponent],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    TableFormComponent,
+    TranslateModule,
+  ],
 })
 export class TableCreateComponent implements OnInit {
   updateTable = output<void>();

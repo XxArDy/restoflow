@@ -18,6 +18,7 @@ import {
   MatSlideToggleChange,
   MatSlideToggleModule,
 } from '@angular/material/slide-toggle';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
 import { IRole } from 'src/app/shared/model/user/role-dto';
@@ -26,7 +27,12 @@ import { IUserDto } from 'src/app/shared/model/user/user-dto';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatSlideToggleModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule,
+    TranslateModule,
+  ],
   viewProviders: [
     {
       provide: ControlContainer,

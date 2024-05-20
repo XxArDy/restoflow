@@ -1,6 +1,8 @@
 <div class="form__group-line">
   <div class="form__group">
-    <label class="form__label" for="name">Name:</label>
+    <label class="form__label" for="name"
+      >{{ "Products.Name" | translate }}:</label
+    >
     <input
       class="form__input"
       type="text"
@@ -12,7 +14,9 @@
   </div>
 
   <div class="form__group">
-    <label class="form__label" for="categoryId">Category:</label>
+    <label class="form__label" for="categoryId"
+      >{{ "Products.Category" | translate }}:</label
+    >
     <select
       class="form__select"
       id="categoryId"
@@ -31,7 +35,9 @@
   </div>
 </div>
 <div class="form__group">
-  <label class="form__label" for="description">Description:</label>
+  <label class="form__label" for="description"
+    >{{ "Products.Description" | translate }}:</label
+  >
   <textarea
     id="description"
     name="description"
@@ -43,7 +49,9 @@
 
 <div class="form__group-line">
   <div class="form__group">
-    <label class="form__label" for="bonusPoints">Bonus point:</label>
+    <label class="form__label" for="bonusPoints"
+      >{{ "Products.BonusPoint" | translate }}:</label
+    >
     <input
       class="form__input"
       type="number"
@@ -56,7 +64,9 @@
   </div>
 
   <div class="form__group">
-    <label class="form__label" for="price">Price:</label>
+    <label class="form__label" for="price"
+      >{{ "Products.Price" | translate }}:</label
+    >
     <input
       class="form__input"
       type="number"
@@ -69,7 +79,9 @@
   </div>
 
   <div class="form__group">
-    <label class="form__label" for="quantity">Quantity:</label>
+    <label class="form__label" for="quantity"
+      >{{ "Products.Quantity" | translate }}:</label
+    >
     <input
       class="form__input"
       type="number"
@@ -84,7 +96,9 @@
 
 <div class="form__group-line">
   <div class="form__group">
-    <label class="form__label" for="measurmentUnitId">Measurement Unit:</label>
+    <label class="form__label" for="measurmentUnitId"
+      >{{ "Products.MeasurementUnit" | translate }}:</label
+    >
     <select
       class="form__select"
       id="measurmentUnitId"
@@ -103,7 +117,9 @@
   </div>
 
   <div class="form__group">
-    <label class="form__label" for="cookingTime">Cooking Time (minutes):</label>
+    <label class="form__label" for="cookingTime"
+      >{{ "Products.CookingTime" | translate }}:</label
+    >
     <input
       class="form__input"
       type="number"
@@ -116,20 +132,24 @@
   </div>
 </div>
 <div class="form__group">
-  <label class="form__label" for="ingredients">Ingredients:</label>
+  <label class="form__label" for="ingredients"
+    >{{ "Products.Ingredients" | translate }}:</label
+  >
   <input
     class="form__input"
     type="text"
     id="ingredients"
     name="ingredients"
     formControlName="ingredients"
-    placeholder="Please enter ingredients, separated by commas"
+    placeholder="{{ 'Products.IngredientsPlaceholder' | translate }}"
     required
   />
 </div>
 
 <div class="form__group">
-  <label class="form__label" for="images">Images:</label>
+  <label class="form__label" for="images"
+    >{{ "Products.Images" | translate }}:</label
+  >
   <input
     class="form__file"
     type="file"

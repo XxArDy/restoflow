@@ -38,25 +38,25 @@
   </div>
   <div class="order__footer">
     <div class="order__footer-statistic">
-      <span>Total orders {{ totalOrders }}</span>
-      <span>Total products {{ totalProducts }}</span>
+      <span>{{ "Orders.TotalOrders" | translate }} {{ totalOrders }}</span>
+      <span>{{ "Orders.TotalProducts" | translate }} {{ totalProducts }}</span>
     </div>
     <div class="order__footer-legend">
       <div class="order__footer-legend-item">
         <div class="box choosing"></div>
-        - choosing
+        - {{ "Orders.Choosing" | translate | lowercase }}
       </div>
       <div class="order__footer-legend-item">
         <div class="box ordered"></div>
-        - ordered
+        - {{ "Orders.Ordered" | translate | lowercase }}
       </div>
       <div class="order__footer-legend-item">
         <div class="box cooking"></div>
-        - cooking
+        - {{ "Orders.Cooking" | translate | lowercase }}
       </div>
       <div class="order__footer-legend-item">
         <div class="box ready"></div>
-        - ready
+        - {{ "Orders.Ready" | translate | lowercase }}
       </div>
     </div>
   </div>

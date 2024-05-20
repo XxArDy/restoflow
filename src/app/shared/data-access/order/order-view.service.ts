@@ -36,6 +36,7 @@ export class OrderViewService {
     this.restaurantList$ = this._restaurantService.getAllRestaurants();
 
     const userRestaurantId = this._authService.currentUser?.restaurantId ?? -1;
+    this.selectedTableList = [];
 
     if (userRestaurantId !== -1) {
       this._onSelectedRestaurantIdChange(userRestaurantId);

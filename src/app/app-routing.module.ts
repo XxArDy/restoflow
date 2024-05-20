@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { OrderComponent } from './dashboard/orders/order.component';
 import { ProductsComponent } from './dashboard/products/products.component';
 import { RestaurantsComponent } from './dashboard/restaurants/restaurants.component';
+import { StatisticComponent } from './dashboard/statistic/statistic.component';
 import { TableComponent } from './dashboard/tables/table.component';
 import { UserComponent } from './dashboard/users/user.component';
 import { LoginComponent } from './login/login.component';
@@ -64,7 +65,7 @@ const routes: Routes = [
         path: ROUTING_CONFIG.statisticsUrl,
         resolve: { user: UserResolver },
         canActivate: [AuthGuard],
-        component: OrderComponent,
+        component: StatisticComponent,
       },
     ],
   },

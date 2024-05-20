@@ -1,0 +1,32 @@
+<select-restaurant
+  [selectedRestaurantId]="selectedRestaurantId"
+  [restaurantList$]="restaurantList$"
+  (changeRestaurant)="onRestaurantChange($event)"
+></select-restaurant>
+@if (selectedRestaurantId !== 0) {
+<label for="fromDate">From:</label>
+<input
+  matInput
+  class="form__input"
+  id="fromDate"
+  [matDatepicker]="fromDatePicker"
+  [(ngModel)]="fromDate"
+  (dateChange)="onDateChange()"
+/>
+<mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+<mat-datepicker #fromDatePicker></mat-datepicker>
+
+<label for="toDate">To:</label>
+<input
+  matInput
+  class="form__input"
+  id="toDate"
+  [matDatepicker]="toDatePicker"
+  [(ngModel)]="toDate"
+  (dateChange)="onDateChange()"
+/>
+<mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+<mat-datepicker #toDatePicker></mat-datepicker>
+<div class="order-tip-chart"></div>
+<div class="product-quantity-chart"></div>
+}

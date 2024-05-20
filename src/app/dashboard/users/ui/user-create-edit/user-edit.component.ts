@@ -11,7 +11,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 @Component({
   selector: 'app-user-edit',
   template: `<div class="form-container">
-    <h1 class="form__title">Edit user</h1>
+    <h1 class="form__title">{{ 'User.Edit' | translate }}</h1>
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
       <app-user-form
         controlKey="userForm"
@@ -20,7 +20,9 @@ import { UserFormComponent } from '../user-form/user-form.component';
         [userValue]="user"
       ></app-user-form>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div> `,

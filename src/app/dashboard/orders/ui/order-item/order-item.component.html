@@ -9,7 +9,7 @@
     [matMenuTriggerFor]="menu"
   >
     <div class="order-item__header">
-      <span>Order #{{ orderData.orderDto.id }}</span>
+      <span>{{ "Orders.Order" | translate }} #{{ orderData.orderDto.id }}</span>
       <span>{{ tableName() }}</span>
     </div>
     <div class="order-item__body">
@@ -22,11 +22,11 @@
             <img [src]="item.productImage" alt="Product Image" />
           </div>
           <div class="order-item__body-card-title">
-            <span>Name</span>
+            <span>{{ "Orders.Name" | translate }}</span>
             <span>{{ item.productName }}</span>
           </div>
           <div class="order-item__body-card-quantity">
-            <span>Quantity</span>
+            <span>{{ "Orders.Quantity" | translate }}</span>
             <span>{{ item.quantity }}</span>
           </div>
         </div>
@@ -36,27 +36,40 @@
     <div class="order-item__footer">
       <span
         >X {{ orderData.orderProductDtos.length }}
-        {{ orderData.orderProductDtos.length === 1 ? "item" : "items" }}</span
+        {{
+          (orderData.orderProductDtos.length === 1
+            ? "Orders.Item"
+            : "Orders.Items"
+          )
+            | translate
+            | lowercase
+        }}</span
       >
       <span>{{ orderData.orderDto.sumToPay | currency }}</span>
     </div>
   </div>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onStatusChanged('ORDERED')">Ordered</button>
-    <button mat-menu-item (click)="onStatusChanged('COOKING')">Cooking</button>
-    <button mat-menu-item (click)="onStatusChanged('READY')">Ready</button>
+    <button mat-menu-item (click)="onStatusChanged('ORDERED')">
+      {{ "Orders.Ordered" | translate }}
+    </button>
+    <button mat-menu-item (click)="onStatusChanged('COOKING')">
+      {{ "Orders.Cooking" | translate }}
+    </button>
+    <button mat-menu-item (click)="onStatusChanged('READY')">
+      {{ "Orders.Ready" | translate }}
+    </button>
   </mat-menu>
 </ng-container>
 <ng-template #emptyOrder>
   <div class="order-item order-item__choosing">
     <div class="order-item__header">
-      <span>Order #0</span>
+      <span>{{ "Orders.Order" | translate }} #0</span>
       <span>{{ tableName() }}</span>
     </div>
     <div class="order-item__body"></div>
     <div class="order-item__footer">
-      <span>X 0 item</span>
+      <span>X 0 {{ "Orders.Item" | translate | lowercase }}</span>
       <span>{{ 0 | currency }}</span>
     </div>
   </div>

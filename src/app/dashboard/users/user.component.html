@@ -3,7 +3,7 @@
     *ngIf="
       authService.checkPermission([ROLES_CONFIG.superAdmin, ROLES_CONFIG.admin])
     "
-    name="Create user"
+    name="User.Create"
     (click)="openDialog()"
   ></button-primary>
 
@@ -21,7 +21,7 @@
   ></app-user-list>
 </div>
 <div class="user-table__footer">
-  <span>{{ filterService.currentTotalPage }}</span>
+  <span>{{ filterService.currentTotalPage | async }}</span>
 </div>
 <modal-window [isOpen]="isModalOpen" (closed)="closeDialog()">
   <ng-template #modalContent></ng-template>

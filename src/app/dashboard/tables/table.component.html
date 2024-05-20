@@ -10,7 +10,7 @@
       <search-primary [filterService]="filterService"></search-primary>
       @if(authService.isItUserRestaurant(tableMenuService.selectedRestaurantId)){
       <button-primary
-        name="Create tables"
+        name="Tables.Create"
         (click)="onOpenModal('create')"
       ></button-primary>
       }
@@ -24,7 +24,7 @@
         (editTable)="onOpenModal('edit', $event)"
       ></app-table-item>
       } @empty {
-      <span>Restaurant have`nt table</span>
+      <span>{{ "Tables.Empty" | translate }}</span>
       }
     </div>
     <div class="table-list__inner-pagination">
@@ -53,12 +53,12 @@
     <div class="table-menu__header">
       <div class="table-menu__buttons">
         <button-primary
-          name="Reservation"
+          name="Reservations.Reservations"
           [appDisable]="tableMenuService.currentPage === 'reservation'"
           (click)="tableMenuService.currentPage = 'reservation'"
         ></button-primary>
         <button-primary
-          name="Orders"
+          name="Orders.Orders"
           [appDisable]="tableMenuService.currentPage === 'orders'"
           (click)="tableMenuService.currentPage = 'orders'"
         ></button-primary>
@@ -89,11 +89,11 @@
 >
   <div class="table-menu__buttons">
     <button-primary
-      name="Reservation"
+      name="Reservations.Reservations"
       (click)="onOpenModal('reservation')"
     ></button-primary>
     <button-primary
-      name="Orders"
+      name="Orders.Orders"
       (click)="onOpenModal('orders')"
     ></button-primary>
   </div>

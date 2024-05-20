@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs';
 import { AuthService } from 'src/app/shared/data-access/user/auth.service';
@@ -17,7 +18,7 @@ import { AuthService } from 'src/app/shared/data-access/user/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;

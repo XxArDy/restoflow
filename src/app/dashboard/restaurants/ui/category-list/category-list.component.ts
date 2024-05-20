@@ -18,7 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   template: ` <div class="category-list__header">
       <button-primary
         *ngIf="authService.isItUserRestaurant(restaurantId())"
-        name="Create category"
+        name="Categories.Create"
         (click)="createCategory.emit()"
       ></button-primary>
       <search-primary [filterService]="filterService"></search-primary>

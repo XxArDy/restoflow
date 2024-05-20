@@ -19,17 +19,19 @@ import { RestaurantFormComponent } from './restaurant-form.component';
   standalone: true,
   imports: [SharedModule, RestaurantFormComponent],
   template: `<div class="form-container">
-    <h1 class="form__title">Edit restaurant</h1>
+    <h1 class="form__title">{{ 'Restaurants.Edit' | translate }}</h1>
     <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()" class="form">
       <app-restaurant-form [restaurantValue]="restaurant"></app-restaurant-form>
 
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
         <a
           *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
           class="form__delete"
           (click)="deleteRestaurant()"
-          >Delete</a
+          >{{ 'Form.Delete' | translate }}</a
         >
       </div>
     </form>

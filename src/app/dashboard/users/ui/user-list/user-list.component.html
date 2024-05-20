@@ -2,7 +2,7 @@
   <thead class="table__header">
     <tr>
       <th (click)="filter.sortData('email')">
-        Email
+        {{ "User.Email" | translate }}
         <span
           *ngIf="filter.sortField === 'email'"
           class="material-symbols-outlined"
@@ -14,7 +14,7 @@
         >
       </th>
       <th (click)="filter.sortData('username')">
-        Username
+        {{ "User.Username" | translate }}
         <span
           *ngIf="filter.sortField === 'username'"
           class="material-symbols-outlined"
@@ -26,7 +26,7 @@
         >
       </th>
       <th (click)="filter.sortData('fullName')">
-        Full name
+        {{ "User.FullName" | translate }}
         <span
           *ngIf="filter.sortField === 'fullName'"
           class="material-symbols-outlined"
@@ -38,7 +38,7 @@
         >
       </th>
       <th (click)="filter.sortData('restaurantName')">
-        Restaurant name
+        {{ "User.RestaurantName" | translate }}
         <span
           *ngIf="filter.sortField === 'restaurantName'"
           class="material-symbols-outlined"
@@ -50,7 +50,7 @@
         >
       </th>
       <th (click)="filter.sortData('bonusScore')">
-        Bonus score
+        {{ "User.BonusScore" | translate }}
         <span
           *ngIf="filter.sortField === 'bonusScore'"
           class="material-symbols-outlined"
@@ -62,7 +62,7 @@
         >
       </th>
       <th (click)="filter.sortData('deleted')">
-        Deleted
+        {{ "User.Deleted" | translate }}
         <span
           *ngIf="filter.sortField === 'deleted'"
           class="material-symbols-outlined"
@@ -73,7 +73,7 @@
           }}</span
         >
       </th>
-      <th>Functions</th>
+      <th>{{ "User.Functions" | translate }}</th>
     </tr>
   </thead>
 
@@ -86,7 +86,7 @@
       <td>{{ restaurantService.getRestaurantName(user) }}</td>
       <td>{{ user.bonusScore || 0 }}</td>
       <td [style.color]="user.deleted ? 'red' : 'green'">
-        {{ user.deleted ? "Deleted" : "Active" }}
+        {{ (user.deleted ? "User.Deactivated" : "User.Activated") | translate }}
       </td>
       <td class="table__functions">
         <button-edit (click)="editUser.emit(user.id)"></button-edit>
@@ -95,7 +95,7 @@
     </tr>
     } @empty {
     <tr>
-      <td>User list is empty</td>
+      <td>{{ "User.Empty" | translate }}</td>
     </tr>
     }
   </tbody>

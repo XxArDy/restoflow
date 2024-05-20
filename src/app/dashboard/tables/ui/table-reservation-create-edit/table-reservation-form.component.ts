@@ -47,9 +47,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   template: `<div class="form__group-line">
       <div class="form__group">
-        <label for="table-id" class="form__label">Table</label>
+        <label for="table-id" class="form__label">{{
+          'Tables.Table' | translate
+        }}</label>
         <select id="table-id" formControlName="tableId" class="form__select">
-          <option value="" disabled selected>Select the table</option>
+          <option value="" disabled selected>
+            {{ 'Reservations.SelectTable' | translate }}
+          </option>
           <option
             *ngFor="let table of tableList$ | async"
             [value]="table.id"
@@ -60,9 +64,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
         </select>
       </div>
       <div class="form__group">
-        <label for="user-id" class="form__label">User</label>
+        <label for="user-id" class="form__label">{{
+          'Users.User' | translate
+        }}</label>
         <select id="user-id" formControlName="userId" class="form__select">
-          <option disabled selected [value]="0">Select the user</option>
+          <option disabled selected [value]="0">
+            {{ 'Reservations.SelectUser' | translate }}
+          </option>
           <option *ngFor="let user of userList$ | async" [value]="user.id">
             {{ userService.getFullName(user) }}
           </option>
@@ -71,7 +79,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     </div>
     <div class="form__group-line">
       <div class="form__group">
-        <label for="reservationDate" class="form__label">Date</label>
+        <label for="reservationDate" class="form__label">{{
+          'Reservations.Date' | translate
+        }}</label>
         <input
           matInput
           class="form__input"
@@ -87,7 +97,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
         <mat-datepicker #datePicker></mat-datepicker>
       </div>
       <div class="form__group">
-        <label for="reservationTime" class="form__label">Time</label>
+        <label for="reservationTime" class="form__label">{{
+          'Reservations.Time' | translate
+        }}</label>
         <igx-time-picker
           #picker
           id="reservationTime"
@@ -128,9 +140,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
             </div>
           </ng-template>
         </igx-time-picker>
-        <igx-toast #toast
-          >Value must be between {{ minTime }} and {{ maxTime }}.</igx-toast
-        >
+        <igx-toast #toast>{{
+          'Reservations.ValueRange'
+            | translate : { minTime: minTime, maxTime: maxTime }
+        }}</igx-toast>
       </div>
     </div>`,
 })

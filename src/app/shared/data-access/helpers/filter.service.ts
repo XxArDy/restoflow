@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatest, map, Observable, of } from 'rxjs';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { UserService } from '../user/user.service';
@@ -14,6 +15,7 @@ export class FilterService {
 
   private _userService = inject(UserService);
   private _restaurantService = inject(RestaurantService);
+  private _translate = inject(TranslateService);
 
   set pageElement(number: number) {
     this._pageElement.next(number);
@@ -28,7 +30,10 @@ export class FilterService {
   }
 
   get currentTotalPage() {
-    return `${this._currentPage.getValue()} of ${this._totalPages.getValue()}`;
+    return this._translate.get('Filter.Current-Total-page', {
+      currentPage: this._currentPage.getValue(),
+      totalPages: this._totalPages.getValue(),
+    });
   }
 
   public changePage(number: number): void {

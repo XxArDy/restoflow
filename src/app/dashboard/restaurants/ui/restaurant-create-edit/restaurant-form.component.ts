@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { RestaurantService } from 'src/app/shared/data-access/restaurant/restaurant.service';
 import { AuthService } from 'src/app/shared/data-access/user/auth.service';
 import { IRestaurant } from 'src/app/shared/model/restaurant/restaurant';
@@ -21,11 +22,13 @@ import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-l
       useFactory: () => inject(ControlContainer, { skipSelf: true }),
     },
   ],
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   template: `
     <div class="form__group-line">
       <div class="form__group">
-        <label for="address" class="form__label">Address</label>
+        <label for="address" class="form__label">{{
+          'Restaurants.Address' | translate
+        }}</label>
         <input
           type="text"
           id="address"
@@ -34,7 +37,9 @@ import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-l
         />
       </div>
       <div class="form__group">
-        <label for="name" class="form__label">Name</label>
+        <label for="name" class="form__label">{{
+          'Restaurants.Name' | translate
+        }}</label>
         <input
           type="text"
           id="name"
@@ -45,7 +50,9 @@ import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-l
     </div>
     <div class="form__group-line">
       <div class="form__group">
-        <label for="latitude" class="form__label">Latitude</label>
+        <label for="latitude" class="form__label">{{
+          'Restaurants.Latitude' | translate
+        }}</label>
         <input
           type="text"
           id="latitude"
@@ -54,7 +61,9 @@ import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-l
         />
       </div>
       <div class="form__group">
-        <label for="longitude" class="form__label">Longitude</label>
+        <label for="longitude" class="form__label">{{
+          'Restaurants.Longitude' | translate
+        }}</label>
         <input
           type="text"
           id="longitude"
@@ -64,7 +73,7 @@ import { RestaurantLocation } from 'src/app/shared/model/restaurant/restaurant-l
       </div>
     </div>
     <button type="button" class="add-button" (click)="tryLoadLocation()">
-      Try load location
+      {{ 'Restaurants.TryLoadLocation' | translate }}
     </button>
   `,
 })

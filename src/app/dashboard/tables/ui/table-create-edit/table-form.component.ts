@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,7 +18,9 @@ import { environment } from 'src/environments/environment';
   >
     <div class="form__group-line">
       <div class="form__group">
-        <label for="name" class="form__label">Name</label>
+        <label for="name" class="form__label">{{
+          'Tables.Name' | translate
+        }}</label>
         <input
           type="text"
           id="name"
@@ -26,7 +29,9 @@ import { environment } from 'src/environments/environment';
         />
       </div>
       <div class="form__group">
-        <label for="numOfSeats" class="form__label">Seats count</label>
+        <label for="numOfSeats" class="form__label">{{
+          'Tables.SeatsCount' | translate
+        }}</label>
         <input
           type="number"
           id="numOfSeats"
@@ -36,7 +41,9 @@ import { environment } from 'src/environments/environment';
       </div>
     </div>
     <div class="form__group">
-      <label for="statusId" class="form__label">Status</label>
+      <label for="statusId" class="form__label">{{
+        'Tables.Status' | translate
+      }}</label>
       <select id="statusId" formControlName="statusId" class="form__select">
         <option *ngFor="let status of allStatuses" [value]="status">
           {{ status }}
@@ -49,11 +56,11 @@ import { environment } from 'src/environments/environment';
       type="button"
       (click)="removeForm.emit(formName()!); $event.stopPropagation()"
     >
-      Remove
+      {{ 'Form.Remove' | translate }}
     </button>
   </fieldset>`,
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslateModule],
 })
 export class TableFormComponent {
   isEditing = input<boolean>(false);

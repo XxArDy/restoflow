@@ -6,18 +6,21 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { CategoryService } from 'src/app/shared/data-access/restaurant/category.service';
 import { ICategory } from 'src/app/shared/model/product/category';
 
 @Component({
   selector: 'app-category-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   template: `<div class="form-container">
-    <h1 class="form__title">Create category</h1>
+    <h1 class="form__title">{{ 'Categories.Create' | translate }}</h1>
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form__group">
-        <label for="name" class="form__label">Name</label>
+        <label for="name" class="form__label">{{
+          'Categories.Name' | translate
+        }}</label>
         <input
           type="text"
           id="name"
@@ -26,7 +29,9 @@ import { ICategory } from 'src/app/shared/model/product/category';
         />
       </div>
       <div class="form__btn">
-        <button type="submit" class="form__submit">Submit</button>
+        <button type="submit" class="form__submit">
+          {{ 'Form.Submit' | translate }}
+        </button>
       </div>
     </form>
   </div>`,
