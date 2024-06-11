@@ -1,32 +1,78 @@
-<select-restaurant
-  [selectedRestaurantId]="selectedRestaurantId"
-  [restaurantList$]="restaurantList$"
-  (changeRestaurant)="onRestaurantChange($event)"
-></select-restaurant>
+<div class="top-header">
+  <select-restaurant
+    *ngIf="authService.checkPermission([ROLES_CONFIG.superAdmin])"
+    [selectedRestaurantId]="selectedRestaurantId"
+    [restaurantList$]="restaurantList$"
+    (changeRestaurant)="onRestaurantChange($event)"
+  ></select-restaurant>
+  @if (selectedRestaurantId !== 0) {
+  <button-primary
+    name="Statistics.DownloadPDF"
+    (click)="downloadPDF()"
+  ></button-primary>
+  <select class="select-primary" (change)="onTabChange($event)">
+    <option value="no-promo" [selected]="currentPage === 'no-promo'">
+      {{ "Statistics.NoPromo" | translate }}
+    </option>
+    <option value="promo" [selected]="currentPage === 'promo'">
+      {{ "Statistics.Promo" | translate }}
+    </option>
+  </select>
+  }
+</div>
 @if (selectedRestaurantId !== 0) {
-<label for="fromDate">From:</label>
-<input
-  matInput
-  class="form__input"
-  id="fromDate"
-  [matDatepicker]="fromDatePicker"
-  [(ngModel)]="fromDate"
-  (dateChange)="onDateChange()"
-/>
-<mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-<mat-datepicker #fromDatePicker></mat-datepicker>
+<div class="head">
+  <div class="column">
+    <label for="fromDate">{{ "Statistics.From" | translate }}:</label>
+    <input
+      matInput
+      class="form__input"
+      id="fromDate"
+      [matDatepicker]="fromDatePicker"
+      [(ngModel)]="fromDate"
+      (dateChange)="onDateChange()"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="fromDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #fromDatePicker></mat-datepicker>
+  </div>
+  <div class="column">
+    <label for="toDate">{{ "Statistics.To" | translate }}:</label>
+    <input
+      matInput
+      class="form__input"
+      id="toDate"
+      [matDatepicker]="toDatePicker"
+      [(ngModel)]="toDate"
+      (dateChange)="onDateChange()"
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="toDatePicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #toDatePicker></mat-datepicker>
+  </div>
+</div>
+<div class="content">
+  <div class="top-product">
+    <span>{{ "Statistics.TopProduct" | translate }}:</span>
+    @for (item of topProduct; track $index) {
+    <span>{{ $index + 1 }}. {{ item.productDto.name }}</span>
+    }
+  </div>
 
-<label for="toDate">To:</label>
-<input
-  matInput
-  class="form__input"
-  id="toDate"
-  [matDatepicker]="toDatePicker"
-  [(ngModel)]="toDate"
-  (dateChange)="onDateChange()"
-/>
-<mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-<mat-datepicker #toDatePicker></mat-datepicker>
-<div class="order-tip-chart"></div>
-<div class="product-quantity-chart"></div>
+  <div class="diagrams">
+    <div class="sum">
+      <span>{{ "Statistics.Sum" | translate }}:</span>
+      <div class="order-tip-chart"></div>
+    </div>
+    <div class="quantity">
+      <span>{{ "Statistics.Quantity" | translate }}:</span>
+      <div class="product-quantity-chart"></div>
+    </div>
+  </div>
+</div>
 }
+<div class="tooltip"></div>

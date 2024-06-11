@@ -30,6 +30,7 @@
     "fflate": "^0.8.1",
     "igniteui-angular": "^17.1.10",
     "jquery": "^3.7.1",
+    "jspdf": "^2.5.1",
     "minireset.css": "~0.0.4",
     "moment-timezone": "^0.5.45",
     "ngx-slick-carousel": "^17.0.0",

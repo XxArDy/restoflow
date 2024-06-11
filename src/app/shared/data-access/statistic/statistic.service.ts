@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IOrderCombDto } from '../../model/order/order-comb-dto';
-import { IProduct } from '../../model/product/product';
+import { IProductContent } from '../../model/product/product-content';
 
 @Injectable({
   providedIn: 'root',
@@ -20,12 +20,29 @@ export class StatisticService {
     restaurantId: number,
     from: Date,
     to: Date
-  ): Promise<IProduct[]> {
-    const response = await fetch(`${this._baseUrl}public/order/top`, {
+  ): Promise<IProductContent[]> {
+    const response = await fetch(`${this._baseUrl}public/product/top`, {
       headers: {
         restaurantId: restaurantId.toString(),
         from: from.toISOString(),
         to: to.toISOString(),
+        limit: `${5}`,
+      },
+    });
+    return await response.json();
+  }
+
+  public async getTopPromProduct(
+    restaurantId: number,
+    from: Date,
+    to: Date
+  ): Promise<IProductContent[]> {
+    const response = await fetch(`${this._baseUrl}public/product/top/prom`, {
+      headers: {
+        restaurantId: restaurantId.toString(),
+        from: from.toISOString(),
+        to: to.toISOString(),
+        limit: `${5}`,
       },
     });
     return await response.json();
@@ -44,6 +61,21 @@ export class StatisticService {
     const response = await fetch(
       `${this._baseUrl}public/order/comb/between?${params.toString()}`
     );
+    return await response.json();
+  }
+
+  public async getPromOrdersFromTo(
+    restaurantId: number,
+    from: Date,
+    to: Date
+  ): Promise<IOrderCombDto[]> {
+    const response = await fetch(`${this._baseUrl}public/order/prom`, {
+      headers: {
+        restaurantId: restaurantId.toString(),
+        from: from.toISOString(),
+        to: to.toISOString(),
+      },
+    });
     return await response.json();
   }
 }

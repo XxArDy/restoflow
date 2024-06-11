@@ -1,0 +1,106 @@
+@import "/src/scss/index";
+
+:host {
+  overflow: hidden;
+}
+
+.top-header {
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+  gap: 10px;
+
+  @include tablet {
+    @include flex(column, center, center);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+.head {
+  margin-top: 10px;
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+  gap: 10px;
+
+  @include tablet {
+    @include flex(column, center, center);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .column {
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 5px;
+    min-width: 200px;
+
+    label {
+      white-space: nowrap;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    mat-datepicker-toggle {
+      position: absolute;
+      right: 10px;
+    }
+  }
+}
+
+.content {
+  overflow: hidden;
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+  overflow: auto;
+
+  @include tablet {
+    @include flex(column, center, center);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .top-product {
+    @include flex(column, center, center);
+    gap: 10px;
+    flex: 1;
+    margin: 10px 0 10px 0;
+    min-width: 200px;
+
+    span {
+      font-size: 18px;
+      color: $text-dark;
+    }
+  }
+
+  .diagrams {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .sum,
+    .quantity {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 28px;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+}

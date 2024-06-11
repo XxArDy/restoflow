@@ -131,6 +131,14 @@
   },
   "Statistics": {
     "Statistics": "Statistics",
-    "Statistic": "Statistic"
+    "Statistic": "Statistic",
+    "From": "From",
+    "To": "To",
+    "Sum": "Diagram of profit by day",
+    "Quantity": "Diagram of the number of products by day",
+    "Promo": "Promo product",
+    "NoPromo": "All product",
+    "DownloadPDF": "Download PDF",
+    "TopProduct": "Top product"
   }
 }

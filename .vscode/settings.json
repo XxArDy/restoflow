@@ -4,6 +4,7 @@
     "autoprefixer",
     "boundingbox",
     "callout",
+    "canvg",
     "danielmoncada",
     "datepicker",
     "datetime",
@@ -16,6 +17,7 @@
     "notfound",
     "Pageable",
     "Restoflow",
+    "rgbcolor",
     "stompjs",
     "toastr",
     "unselectable"

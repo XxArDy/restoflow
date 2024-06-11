@@ -19,7 +19,9 @@ import { ROLES_CONFIG } from './../../../../shared/configs/app-role';
       <span class="table__status">{{ table().statusId }}</span>
     </div>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onSelectClick()">Select</button>
+      <button mat-menu-item (click)="onSelectClick()">
+        {{ 'Tables.Select' | translate }}
+      </button>
       <a mat-menu-item href="{{ (tableImage | async)?.url }}" target="_blank">{{
         'Tables.Download' | translate
       }}</a>
