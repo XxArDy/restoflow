@@ -1,27 +1,59 @@
-# FrWarlock
+# 🍽️ Restaurant Admin Panel
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
+A restaurant management system built with **Angular 17**.  
+This project provides an **admin panel** and **staff interface** for managing restaurants, users, menus, tables, and orders.  
+It is designed to work with a backend API (private GitLab project) and mobile client.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Features
 
-## Code scaffolding
+### 👤 User Roles
+- **Super Admin** – full system management
+- **Admin** – manage a single restaurant
+- **Manager** – oversee staff and restaurant operations
+- **Operator** – handle specific administrative tasks
+- **Cook** – receive and update orders
+- **Waiter** – manage tables and serve customers
+- **User** – place orders via QR code
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 🏢 Restaurant Management
+- Create and manage multiple restaurants
+- Add and edit menus
+- Manage tables with unique **QR codes** (downloadable and printable)
+- Assign staff with different roles
 
-## Build
+### 🍴 Order System
+- Customers can scan a table QR code and order **without a waiter**
+- Waiters and cooks can **subscribe to tables** via **WebSockets**:
+  - Receive real-time order updates
+  - Change order statuses:
+    - Pending → In Progress → Ready → Delivered
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 📊 Statistics & Reports
+- View restaurant statistics
+- Export reports to **PDF**
 
-## Running unit tests
+---
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🛠️ Tech Stack
+- **Frontend:** Angular 17
+- **Communication:** REST API + WebSockets
+- **PDF generation:** built-in report export
 
-## Running end-to-end tests
+> ⚠️ The backend (API & mobile app) is private and hosted separately on GitLab,  
+so only the Angular project is available in this repository.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## 📷 Screenshots
+### Login page
+![Dashboard](src/assets/screenshots/Screenshot_2.png)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Order page
+![Menu](src/assets/screenshots/Screenshot_1.png)
+
+### Menu page
+![QR Code](src/assets/screenshots/Screenshot_3.png)
+
+---
